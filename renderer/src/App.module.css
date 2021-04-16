@@ -2,36 +2,13 @@
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-areas: 'bot text-editor';
-  grid-template-columns: 3fr 6fr;
-  grid-template-rows: 1fr;
-  grid-gap: 96px;
+  grid-template-areas:
+    'empty empty clock'
+    'bot text-editor text-editor';
+  grid-template-columns: 3fr 6fr auto;
+  grid-template-rows: auto 1fr;
+  grid-gap: 48px 96px;
   padding: 96px;
-}
-
-.bot {
-  position: relative;
-  grid-area: bot;
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.textEditor {
-  grid-area: text-editor;
-  background: rgba(255, 255, 255, 0.8);
-  border-radius: 20px;
-}
-
-.messageContent {
-  flex-grow: 1;
-  overflow: auto;
-  display: flex;
-  flex-direction: column-reverse;
-  padding-bottom: 6px;
-  padding-top: 80px;
 }
 
 .glassmorphism {
@@ -40,7 +17,15 @@
   background: rgba(255, 255, 255, 0.6);
 }
 
-.botName {
+.card {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  box-shadow: 0px 0px 5px 0px rgb(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative;
+}
+
+.cardHeader {
   composes: glassmorphism;
   border-top: none;
   border-left: none;
@@ -53,52 +38,30 @@
   padding: 24px;
   font-size: 1.4rem;
   font-weight: 600;
-}
-
-.textInputWrapper {
-  composes: glassmorphism;
-  border-radius: 0 0 20px 20px;
-  border-left: none;
-  border-right: none;
-  border-bottom: none;
-}
-
-.textInput {
-  background: rgb(230, 230, 230);
-  margin: 12px 24px;
-  border-radius: 20px;
-  padding: 12px 18px;
+  z-index: 30;
+  height: 80px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
-.textInputInside {
-  width: 100%;
-  display: block;
-  max-height: 115px;
-  overflow: auto;
-  font-size: 1rem;
-  font-weight: 500;
-  outline: none;
+.textEditor {
+  composes: card;
+  grid-area: text-editor;
+  background: #1e1e1e;
 }
 
-.genericMessage {
-  padding: 12px;
-  margin: 1px 24px;
-  background: white;
-  max-width: 60%;
-  border-radius: 20px;
-  white-space: pre-wrap;
+.clock {
+  grid-area: clock;
+  font-size: 3rem;
 }
 
-.botMessage {
-  composes: genericMessage;
-  align-self: flex-start;
+.runArrow {
+  width: 30px;
+  opacity: 0.8;
+  cursor: pointer;
 }
 
-.userMessage {
-  composes: genericMessage;
-  align-self: flex-end;
-  background: #04d4f0;
-  color: white;
+.monaco {
+  padding-top: 86px;
 }

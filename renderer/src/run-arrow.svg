@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<svg
+  width="78px"
+  height="90px"
+  viewBox="0 0 78 90"
+  version="1.1"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+>
+    <title>Path</title>
+    <g
+    id="Page-1"
+    stroke="none"
+    stroke-width="1"
+    fill="none"
+    fill-rule="evenodd"
+  >
+        <g
+      id="noun_play_47835"
+      transform="translate(0.028000, 0.000000)"
+      fill="#ffffff"
+      fill-rule="nonzero"
+    >
+            <polygon
+        id="Path"
+        points="77.944 45 38.972 67.5 0 90 0 45 0 0 38.972 22.5"
+      />
+        </g>
+    </g>
+</svg>

@@ -1,7 +1,8 @@
 const { app, BrowserWindow, ...electron } = require('electron')
+const path = require('path')
 const { IS_DEV, IS_PROD } = require('./env')
 try {
-  require('electron-reloader')(module)
+  // require('electron-reloader')(module, { watchRenderer: false })
 } catch (error) {
   console.info(error)
 }
@@ -60,9 +61,12 @@ const generateOptions = () => {
     movable: false,
     frame: false,
     visualEffectState: 'active',
-    // transparent: true,
     vibrancy: 'hud',
-    roundedCorners: false,
+    roundedCorners: true,
+    webPreferences: {
+      preload: path.resolve(__dirname, 'preload.js'),
+      nodeIntegration: false,
+    },
   }
   return { ...scr, ...options, opacity, show }
 }
@@ -103,10 +107,23 @@ const main = async () => {
   //   hideWindow(win)
   // })
 
+  // electron.screen.on('display-metrics-changed', event => {
+  //   console.log(event)
+  // })
+
   app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
       app.quit()
     }
+  })
+
+  electron.ipcMain.on('save-script', (event, script) => {
+    console.log(script)
+  })
+
+  electron.ipcMain.on('run-script', event => {
+    console.log('run')
+    event.reply('run-script-result', true)
   })
 }
 
