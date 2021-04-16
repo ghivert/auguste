@@ -1,0 +1,104 @@
+.main {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-areas: 'bot text-editor';
+  grid-template-columns: 3fr 6fr;
+  grid-template-rows: 1fr;
+  grid-gap: 96px;
+  padding: 96px;
+}
+
+.bot {
+  position: relative;
+  grid-area: bot;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.textEditor {
+  grid-area: text-editor;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+}
+
+.messageContent {
+  flex-grow: 1;
+  overflow: auto;
+  display: flex;
+  flex-direction: column-reverse;
+  padding-bottom: 6px;
+  padding-top: 80px;
+}
+
+.glassmorphism {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(50px);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.botName {
+  composes: glassmorphism;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  border-radius: 20px 20px 0 0;
+  padding: 24px;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.textInputWrapper {
+  composes: glassmorphism;
+  border-radius: 0 0 20px 20px;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+}
+
+.textInput {
+  background: rgb(230, 230, 230);
+  margin: 12px 24px;
+  border-radius: 20px;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+}
+
+.textInputInside {
+  width: 100%;
+  display: block;
+  max-height: 115px;
+  overflow: auto;
+  font-size: 1rem;
+  font-weight: 500;
+  outline: none;
+}
+
+.genericMessage {
+  padding: 12px;
+  margin: 1px 24px;
+  background: white;
+  max-width: 60%;
+  border-radius: 20px;
+  white-space: pre-wrap;
+}
+
+.botMessage {
+  composes: genericMessage;
+  align-self: flex-start;
+}
+
+.userMessage {
+  composes: genericMessage;
+  align-self: flex-end;
+  background: #04d4f0;
+  color: white;
+}
