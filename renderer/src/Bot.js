@@ -72,11 +72,27 @@ const renderMessage = ({ text, sender, date }, index, messages) => {
     marginBottom: !sameAsPrevious && '6px',
     marginTop: !sameAsNext && '6px',
   }
+  const diff = nextMessage?.date - date
+  const delta = isNaN(diff) ? Date.now() : diff
   const className = sender === 'user' ? styles.userMessage : styles.botMessage
   return (
-    <div key={index} className={className} style={style}>
-      {text}
-    </div>
+    <>
+      <div key={index} className={className} style={style}>
+        {text}
+      </div>
+
+      {!sameAsNext && delta > 5000 && (
+        <div className={sender === 'user' ? styles.userDate : styles.botDate}>
+          {date.toLocaleString('fr-fr', {
+            ...(nextMessage?.date?.getDate() !== date.getDay()
+              ? { year: 'numeric', month: 'long', day: 'numeric' }
+              : {}),
+            hour: 'numeric',
+            minute: 'numeric',
+          })}
+        </div>
+      )}
+    </>
   )
 }
 
@@ -89,7 +105,7 @@ const createArray = () => {
       return {
         text: content,
         sender: Math.random() > 0.5 ? 'auguste' : 'user',
-        date: new Date(),
+        date: new Date(Date.now() + index),
       }
     })
 }

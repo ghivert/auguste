@@ -66,3 +66,20 @@
   background: #04d4f0;
   color: white;
 }
+
+.date {
+  padding-top: 12px;
+  margin: 0 24px;
+  font-weight: 500;
+  color: #aaa;
+}
+
+.userDate {
+  composes: date;
+  align-self: flex-end;
+}
+
+.botDate {
+  composes: date;
+  align-self: flex-start;
+}
