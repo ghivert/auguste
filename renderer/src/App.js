@@ -1,11 +1,17 @@
 import { useState, useRef, useEffect } from 'react'
-import Editor, { DiffEditor, useMonaco, loader } from '@monaco-editor/react'
+import Editor from '@monaco-editor/react'
 import Bot from './Bot'
 import styles from './App.module.css'
 import runArrow from './run-arrow.svg'
+// import { parseTmTheme } from 'monaco-themes'
+// import oneDark from './one-dark'
 
 const TextEditor = () => {
   const codeRef = useRef()
+  const beforeMount = monaco => {
+    // const theme = parseTmTheme(oneDark)
+    // monaco.editor.defineTheme('one-dark', theme)
+  }
   const onMount = (editor, monaco) => (codeRef.current = editor)
   const sendToMainProcess = code => window.electron.saveScript(code)
   const run = () => window.electron.runScript()
@@ -27,6 +33,7 @@ const TextEditor = () => {
       <Editor
         defaultLanguage="javascript"
         theme="vs-dark"
+        beforeMount={beforeMount}
         onMount={onMount}
         onChange={sendToMainProcess}
         className={styles.monaco}

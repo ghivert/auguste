@@ -1,5 +1,5 @@
 {
-  "name": "auguste",
+  "name": "elwyn",
   "version": "1.0.0",
   "author": "Guillaume Hivert <hivert.is.coming@gmail.com>",
   "license": "MIT",
@@ -9,7 +9,8 @@
   "devDependencies": {
     "electron": "^13.0.0-beta.14",
     "electron-reloader": "^1.2.0",
-    "eslint": "^7.24.0"
+    "eslint": "^7.24.0",
+    "prettier": "^2.2.1"
   },
   "dependencies": {
     "@monaco-editor/react": "^4.1.1"

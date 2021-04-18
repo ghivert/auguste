@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { Fragment, useState, useRef } from 'react'
 import styles from './Bot.module.css'
 
 const moveCursor = (el, position) => {
@@ -65,9 +65,9 @@ const renderMessage = ({ text, sender, date }, index, messages) => {
   const sameAsNext = nextMessage?.sender === sender
   const sameAsPrevious = previousMessage?.sender === sender
   const style = {
-    borderTopLeftRadius: sameAsNext && sender === 'auguste' && '10px',
+    borderTopLeftRadius: sameAsNext && sender === 'elwyn' && '10px',
     borderTopRightRadius: sameAsNext && sender === 'user' && '10px',
-    borderBottomLeftRadius: sameAsPrevious && sender === 'auguste' && '10px',
+    borderBottomLeftRadius: sameAsPrevious && sender === 'elwyn' && '10px',
     borderBottomRightRadius: sameAsPrevious && sender === 'user' && '10px',
     marginBottom: !sameAsPrevious && '6px',
     marginTop: !sameAsNext && '6px',
@@ -76,8 +76,8 @@ const renderMessage = ({ text, sender, date }, index, messages) => {
   const delta = isNaN(diff) ? Date.now() : diff
   const className = sender === 'user' ? styles.userMessage : styles.botMessage
   return (
-    <>
-      <div key={index} className={className} style={style}>
+    <Fragment key={index}>
+      <div className={className} style={style}>
         {text}
       </div>
 
@@ -92,26 +92,32 @@ const renderMessage = ({ text, sender, date }, index, messages) => {
           })}
         </div>
       )}
-    </>
+    </Fragment>
   )
 }
 
-const createArray = () => {
-  return new Array(100)
-    .fill({ text: 'meh meh meh', sender: 'auguste' })
-    .map(({ text, sender }, index) => {
-      const rand = Math.round(Math.random() * 10) + 1
-      const content = new Array(rand).fill(text).join(' ')
-      return {
-        text: content,
-        sender: Math.random() > 0.5 ? 'auguste' : 'user',
-        date: new Date(Date.now() + index),
-      }
-    })
+const readOldMessages = () => {
+  const initialMessage = {
+    text: 'Bonjour, en quoi puis-je vous aider aujourd’hui ?',
+    date: new Date(),
+    sender: 'elwyn',
+  }
+  const raw = localStorage.getItem('messages')
+  const messages = JSON.parse(raw) || []
+  if (messages.length === 0) {
+    const final = [initialMessage]
+    localStorage.setItem('messages', JSON.stringify(final))
+    return final
+  } else {
+    const convertDate = ({ date, ...message }) => {
+      return { ...message, date: new Date(date) }
+    }
+    return messages.map(convertDate)
+  }
 }
 
 const Bot = () => {
-  const [messages, setMessages] = useState(createArray)
+  const [messages, setMessages] = useState(readOldMessages)
   const onSubmit = value => {
     const date = new Date()
     const text = value.replace(/<br>/g, '\n').trim()
@@ -119,7 +125,7 @@ const Bot = () => {
   }
   return (
     <div className={styles.bot}>
-      <div className={styles.botName}>Auguste</div>
+      <div className={styles.botName}>Elwyn</div>
       <div className={styles.messageContent}>{messages.map(renderMessage)}</div>
       <TextInput onSubmit={onSubmit} />
     </div>

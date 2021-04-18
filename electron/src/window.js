@@ -1,15 +1,10 @@
-const { app, BrowserWindow, ...electron } = require('electron')
+const { BrowserWindow, ...electron } = require('electron')
 const path = require('path')
 const { IS_DEV, IS_PROD } = require('./env')
-try {
-  // require('electron-reloader')(module, { watchRenderer: false })
-} catch (error) {
-  console.info(error)
-}
 
 const showWindow = async (win, value = 0.0) => {
   if (!win.isVisible()) {
-    app.focus()
+    electron.app.focus()
     win.focus()
     win.show()
   }
@@ -35,7 +30,7 @@ const hideWindow = async (win, value = 1.0) => {
       } else {
         win.hide()
         win.blur()
-        app.hide()
+        electron.app.hide()
       }
       resolve()
     })
@@ -57,6 +52,7 @@ const generateOptions = () => {
   const opacity = IS_DEV ? 1 : 0
   const show = IS_DEV
   const options = {
+    alwaysOnTop: IS_PROD,
     resizable: false,
     movable: false,
     frame: false,
@@ -72,7 +68,8 @@ const generateOptions = () => {
 }
 
 const createWindow = () => {
-  const win = new BrowserWindow(generateOptions())
+  const options = generateOptions()
+  const win = new BrowserWindow(options)
   if (IS_DEV) {
     win.loadURL('http://localhost:3000')
   } else {
@@ -81,50 +78,8 @@ const createWindow = () => {
   return win
 }
 
-const configureApp = win => {
-  const shortcut = 'CmdOrCtrl+Shift+Space'
-  electron.globalShortcut.register(shortcut, () => {
-    const handler = win.isVisible() ? hideWindow : showWindow
-    handler(win)
-  })
-  if (IS_PROD) {
-    app.dock.hide()
-  }
+module.exports = {
+  createWindow,
+  hideWindow,
+  showWindow,
 }
-
-const main = async () => {
-  await app.whenReady()
-  const win = createWindow()
-  configureApp(win)
-
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow()
-    }
-  })
-
-  // win.on('blur', () => {
-  //   hideWindow(win)
-  // })
-
-  // electron.screen.on('display-metrics-changed', event => {
-  //   console.log(event)
-  // })
-
-  app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-      app.quit()
-    }
-  })
-
-  electron.ipcMain.on('save-script', (event, script) => {
-    console.log(script)
-  })
-
-  electron.ipcMain.on('run-script', event => {
-    console.log('run')
-    event.reply('run-script-result', true)
-  })
-}
-
-main()
