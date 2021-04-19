@@ -1,5 +1,4 @@
 .bot {
-  composes: card from './App.module.css';
   position: relative;
   grid-area: bot;
   display: flex;
@@ -15,12 +14,8 @@
   padding-top: 80px;
 }
 
-.botName {
-  composes: cardHeader from './App.module.css';
-}
-
 .textInputWrapper {
-  composes: glassmorphism from './App.module.css';
+  composes: glassmorphism from './components/components.module.css';
   border-radius: 0 0 20px 20px;
   border-left: none;
   border-right: none;
@@ -60,10 +55,21 @@
   align-self: flex-start;
 }
 
+@media (prefers-color-scheme: dark) {
+  .textInput {
+    background: rgb(40, 40, 40);
+  }
+
+  .genericMessage {
+    background: rgb(30, 30, 30);
+    color: white;
+  }
+}
+
 .userMessage {
   composes: genericMessage;
   align-self: flex-end;
-  background: #04d4f0;
+  background: #048df0;
   color: white;
 }
 
@@ -82,4 +88,18 @@
 .botDate {
   composes: date;
   align-self: flex-start;
+}
+
+.greyText {
+  color: #999;
+}
+
+@media (prefers-color-scheme: dark) {
+  .greyText {
+    color: #666;
+  }
+
+  .date {
+    color: #777;
+  }
 }

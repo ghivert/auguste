@@ -5,6 +5,10 @@ node_modules/
 /.pnp
 .pnp.js
 
+# python venv
+.venv/
+*.pyc
+
 # testing
 /coverage
 

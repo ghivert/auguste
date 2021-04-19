@@ -1,0 +1,20 @@
+.clock {
+  font-size: 3rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .clock {
+    color: white;
+  }
+}
+
+.taskbar {
+  grid-area: taskbar;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.icon {
+  cursor: pointer;
+}

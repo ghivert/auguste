@@ -1,4 +1,5 @@
 import { Fragment, useState, useRef } from 'react'
+import Card from './components/card'
 import styles from './Bot.module.css'
 
 const moveCursor = (el, position) => {
@@ -42,10 +43,11 @@ const TextInput = ({ onSubmit }) => {
     <div className={styles.textInputWrapper}>
       <div className={styles.textInput}>
         <span
-          className={styles.textInputInside}
+          className={`${styles.textInputInside} ${
+            textInput === 'Aa' && styles.greyText
+          }`}
           contentEditable
           suppressContentEditableWarning
-          style={{ color: textInput === 'Aa' ? 'grey' : null }}
           ref={contentRef}
           onInput={onInput}
           onClick={onClick}
@@ -65,9 +67,9 @@ const renderMessage = ({ text, sender, date }, index, messages) => {
   const sameAsNext = nextMessage?.sender === sender
   const sameAsPrevious = previousMessage?.sender === sender
   const style = {
-    borderTopLeftRadius: sameAsNext && sender === 'elwyn' && '10px',
+    borderTopLeftRadius: sameAsNext && sender === 'auguste' && '10px',
     borderTopRightRadius: sameAsNext && sender === 'user' && '10px',
-    borderBottomLeftRadius: sameAsPrevious && sender === 'elwyn' && '10px',
+    borderBottomLeftRadius: sameAsPrevious && sender === 'auguste' && '10px',
     borderBottomRightRadius: sameAsPrevious && sender === 'user' && '10px',
     marginBottom: !sameAsPrevious && '6px',
     marginTop: !sameAsNext && '6px',
@@ -100,7 +102,7 @@ const readOldMessages = () => {
   const initialMessage = {
     text: 'Bonjour, en quoi puis-je vous aider aujourd’hui ?',
     date: new Date(),
-    sender: 'elwyn',
+    sender: 'auguste',
   }
   const raw = localStorage.getItem('messages')
   const messages = JSON.parse(raw) || []
@@ -124,11 +126,11 @@ const Bot = () => {
     setMessages([{ text, sender: 'user', date }, ...messages])
   }
   return (
-    <div className={styles.bot}>
-      <div className={styles.botName}>Elwyn</div>
+    <Card className={styles.bot}>
+      <Card.Header title="Auguste" />
       <div className={styles.messageContent}>{messages.map(renderMessage)}</div>
       <TextInput onSubmit={onSubmit} />
-    </div>
+    </Card>
   )
 }
 

@@ -38,7 +38,7 @@ const hideWindow = async (win, value = 1.0) => {
 }
 
 const getActiveDisplay = () => {
-  const getDisplay = IS_DEV
+  const getDisplay = false
     ? () => electron.screen.getPrimaryDisplay()
     : () => electron.screen.getDisplayNearestPoint(cursorPoint)
   const cursorPoint = electron.screen.getCursorScreenPoint()

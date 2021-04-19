@@ -19,3 +19,15 @@ code {
 * {
   box-sizing: border-box;
 }
+
+:root {
+  --icon-color: #000;
+  --icon-color-disabled: rgba(0, 0, 0, 0.2);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --icon-color: #fff;
+    --icon-color-disabled: rgba(255, 255, 255, 0.2);
+  }
+}

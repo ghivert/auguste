@@ -5,6 +5,8 @@ import styles from './App.module.css'
 import runArrow from './run-arrow.svg'
 // import { parseTmTheme } from 'monaco-themes'
 // import oneDark from './one-dark'
+import Taskbar from './taskbar'
+import Card from './components/card'
 
 const TextEditor = () => {
   const codeRef = useRef()
@@ -20,16 +22,15 @@ const TextEditor = () => {
     return canceler
   }, [])
   return (
-    <div className={styles.textEditor} onKeyPress={console.log}>
-      <div className={styles.cardHeader}>
-        Run your scripts
+    <Card area="panel" className={styles.textEditor}>
+      <Card.Header className={styles.cardHeader} title="Run your scripts">
         <img
           className={styles.runArrow}
           src={runArrow}
           alt="Run"
           onClick={run}
         />
-      </div>
+      </Card.Header>
       <Editor
         defaultLanguage="javascript"
         theme="vs-dark"
@@ -38,35 +39,37 @@ const TextEditor = () => {
         onChange={sendToMainProcess}
         className={styles.monaco}
       />
-    </div>
+    </Card>
   )
 }
 
-const prependZero = value => {
-  if (value < 10) {
-    return `0${value}`
-  } else {
-    return value.toString()
-  }
+const Dashboard = () => {
+  return (
+    <Card area="panel">
+      <Card.Header title="Dashboard" />
+    </Card>
+  )
 }
 
-const Clock = () => {
-  const [hour, setHour] = useState(new Date())
-  useEffect(() => {
-    const value = setInterval(() => setHour(new Date()), 1000)
-    return () => clearInterval(value)
-  }, [])
-  const hours = prependZero(hour.getHours())
-  const minutes = prependZero(hour.getMinutes())
-  return <code className={styles.clock}>{[hours, minutes].join(' : ')}</code>
+const Settings = () => {
+  return (
+    <Card area="panel">
+      <Card.Header title="Settings" />
+    </Card>
+  )
 }
 
-const App = () => (
-  <div className={styles.main}>
-    <Bot />
-    <TextEditor />
-    <Clock />
-  </div>
-)
+const App = () => {
+  const [panel, setPanel] = useState('dashboard')
+  return (
+    <div className={styles.main}>
+      <Taskbar activePanel={panel} onIconClick={setPanel} />
+      <Bot />
+      {panel === 'editor' && <TextEditor />}
+      {panel === 'dashboard' && <Dashboard />}
+      {panel === 'settings' && <Settings />}
+    </div>
+  )
+}
 
 export default App
