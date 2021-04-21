@@ -3,24 +3,22 @@ import Editor from '@monaco-editor/react'
 import Bot from './Bot'
 import styles from './App.module.css'
 import runArrow from './run-arrow.svg'
-// import { parseTmTheme } from 'monaco-themes'
-// import oneDark from './one-dark'
 import Taskbar from './taskbar'
 import Card from './components/card'
+import spotify from './spotify.png'
+import Auguste from './auguste'
 
 const TextEditor = () => {
   const codeRef = useRef()
-  const beforeMount = monaco => {
-    // const theme = parseTmTheme(oneDark)
-    // monaco.editor.defineTheme('one-dark', theme)
-  }
+  const [script, setScript] = useState('')
   const onMount = (editor, monaco) => (codeRef.current = editor)
-  const sendToMainProcess = code => window.electron.saveScript(code)
-  const run = () => window.electron.runScript()
-  useEffect(() => {
-    const canceler = window.electron.onResult(console.log)
-    return canceler
-  }, [])
+  const sendToMainProcess = code => {
+    setScript(code)
+    Auguste.save('monaco.js', code)
+  }
+  const run = () => Auguste.runScript()
+  useEffect(() => Auguste.read('monaco.js').then(setScript), [])
+  useEffect(() => Auguste.onResult(console.log), [])
   return (
     <Card area="panel" className={styles.textEditor}>
       <Card.Header className={styles.cardHeader} title="Run your scripts">
@@ -32,9 +30,9 @@ const TextEditor = () => {
         />
       </Card.Header>
       <Editor
+        value={script}
         defaultLanguage="javascript"
         theme="vs-dark"
-        beforeMount={beforeMount}
         onMount={onMount}
         onChange={sendToMainProcess}
         className={styles.monaco}
@@ -45,8 +43,22 @@ const TextEditor = () => {
 
 const Dashboard = () => {
   return (
-    <Card area="panel">
+    <Card area="panel" className={styles.dashboard}>
       <Card.Header title="Dashboard" />
+      <Card className={styles.spotify}>
+        <Card.Header title="Spotify" />
+        <div className={styles.cardBody}>
+          <div className={styles.spotifyLogo}>
+            <img src={spotify} alt="Spotify" />
+          </div>
+          <button
+            className={styles.spotifyConnect}
+            onClick={() => window.electron.oauth2()}
+          >
+            Connect to Spotify
+          </button>
+        </div>
+      </Card>
     </Card>
   )
 }

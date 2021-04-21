@@ -11,6 +11,6 @@
   },
   "rules": {
     "no-unused-vars": 1,
-    "no-console": ["error", { "allow": ["info", "warn", "error"] }]
+    "no-console": ["warn", { "allow": ["info", "warn", "error"] }]
   }
 }

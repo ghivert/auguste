@@ -24,3 +24,71 @@
 .monaco {
   padding-top: 86px;
 }
+
+.dashboard {
+  display: grid;
+  grid-template-rows: 80px 1fr;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas:
+    'empty empty'
+    'other spotify';
+}
+
+.title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 24px;
+  color: #111;
+}
+
+.spotify {
+  grid-area: spotify;
+  margin: 24px;
+  border-radius: 20px;
+  background: black;
+  box-shadow: var(--box-shadow);
+}
+
+@media (prefers-color-scheme: dark) {
+  .title {
+    color: #eee;
+  }
+
+  .spotify {
+    background: rgb(20, 20, 20);
+  }
+}
+
+.spotifyLogo {
+  width: 220px;
+  padding: 12px 24px;
+  border-radius: 20px;
+}
+
+.spotifyLogo img {
+  width: 100%;
+}
+
+.cardBody {
+  height: 100%;
+  padding: 0 24px;
+  padding-top: 104px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.spotifyConnect {
+  background: #1db954;
+  padding: 18px 36px;
+  border-radius: 30px;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin: 24px;
+  cursor: pointer;
+  appearance: none;
+  border: none;
+}
