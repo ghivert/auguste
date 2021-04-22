@@ -5,8 +5,9 @@ import styles from './App.module.css'
 import runArrow from './run-arrow.svg'
 import Taskbar from './taskbar'
 import Card from './components/card'
-import spotify from './spotify.png'
+import spotifyLogo from './spotify.png'
 import Auguste from './auguste'
+import * as spotify from './spotify'
 
 const TextEditor = () => {
   const codeRef = useRef()
@@ -41,24 +42,33 @@ const TextEditor = () => {
   )
 }
 
+const Spotify = () => {
+  useEffect(() => {
+    spotify.initialize()
+    if (spotify.logged()) {
+      spotify.me().then(console.log)
+    }
+  }, [])
+  return (
+    <Card className={styles.spotify}>
+      <Card.Header title="Spotify" />
+      <div className={styles.cardBody}>
+        <div className={styles.spotifyLogo}>
+          <img src={spotifyLogo} alt="Spotify" />
+        </div>
+        <button className={styles.spotifyConnect} onClick={() => spotify.log()}>
+          Connect to Spotify
+        </button>
+      </div>
+    </Card>
+  )
+}
+
 const Dashboard = () => {
   return (
     <Card area="panel" className={styles.dashboard}>
       <Card.Header title="Dashboard" />
-      <Card className={styles.spotify}>
-        <Card.Header title="Spotify" />
-        <div className={styles.cardBody}>
-          <div className={styles.spotifyLogo}>
-            <img src={spotify} alt="Spotify" />
-          </div>
-          <button
-            className={styles.spotifyConnect}
-            onClick={() => window.electron.oauth2()}
-          >
-            Connect to Spotify
-          </button>
-        </div>
-      </Card>
+      <Spotify />
     </Card>
   )
 }

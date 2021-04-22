@@ -59,9 +59,25 @@ const readHandler = async (event, { fileName }) => {
   event.reply('read', content)
 }
 
-const oauth2Handler = win => async event => {
-  const token = await spotify.authorize(win)
+const oauth2Handler = win => async (event, { provider }) => {
+  const token = await (async () => {
+    switch (provider) {
+      case 'spotify':
+        return spotify.authorize(win)
+    }
+  })()
   event.reply('oauth2', token)
+}
+
+const oauth2RefreshHandler = async (event, params) => {
+  const { provider, refresh_token } = params
+  const token = await (async () => {
+    switch (provider) {
+      case 'spotify':
+        return spotify.refresh({ refresh_token })
+    }
+  })()
+  event.reply('oauth2-refresh', token)
 }
 
 const main = async () => {
@@ -70,6 +86,7 @@ const main = async () => {
   electron.ipcMain.on('save', saveHandler)
   electron.ipcMain.on('read', readHandler)
   electron.ipcMain.on('oauth2', oauth2Handler(win))
+  electron.ipcMain.on('oauth2-refresh', oauth2RefreshHandler)
 }
 
 main()

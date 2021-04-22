@@ -6,18 +6,12 @@ const SettingsIcon = ({ color, ...props }) => (
     version="1.1"
     {...props}
   >
-    <g
-      id="Page-1"
-      stroke="none"
-      stroke-width="1"
-      fill="none"
-      fill-rule="evenodd"
-    >
+    <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
       <g
         id="noun_Settings_343414"
         transform="translate(0.500000, 0.600000)"
         fill={color}
-        fill-rule="nonzero"
+        fillRule="nonzero"
       >
         <g id="Group" transform="translate(-0.000000, 0.000000)">
           <path

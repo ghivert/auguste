@@ -87,4 +87,13 @@ const authorize = async parent => {
   return results
 }
 
-module.exports = { authorize }
+const refresh = async ({ refresh_token }) => {
+  const grant_type = 'refresh_token'
+  const body = url.encodeFormURL({ grant_type, refresh_token, client_id })
+  const headers = { 'Content-Type': 'application/x-www-form-urlencoded' }
+  const options = { method: 'POST', headers, body }
+  const res = await fetch('https://accounts.spotify.com/api/token', options)
+  return res.json()
+}
+
+module.exports = { authorize, refresh }

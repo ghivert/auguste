@@ -11,7 +11,12 @@ const publish = async (channel, payload) => {
 
 const save = (fileName, content) => publish('save', { fileName, content })
 const read = fileName => publish('read', { fileName })
-const oauth2 = provider => publish('oauth2', { provider })
+const oauth2 = {
+  authorize: provider => publish('oauth2', { provider }),
+  refresh: (provider, refresh_token) => {
+    return publish('oauth2-refresh', { provider, refresh_token })
+  },
+}
 
 const sendAccessToken = token => {
   ipcRenderer.send('send-access-token', token)
