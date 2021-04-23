@@ -6,12 +6,12 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 import Auguste from './auguste'
 
-const extractParams = ({ search, location }) => {
+const extractParams = ({ search, pathname }) => {
   const bindings = search
     .slice(1)
     .split('&')
     .map(t => t.split('='))
-  const [last] = location.split('/').reverse()
+  const [last] = pathname.split('/').reverse()
   const provider = last === 'oauth2' ? null : last
   return [Object.fromEntries(bindings), provider]
 }

@@ -3,6 +3,8 @@ import { useSpotify } from './api'
 import Card from '../components/card'
 import styles from './Spotify.module.css'
 import spotifyLogo from './spotify.png'
+import ComputerIcon from './computer'
+import SmartphoneIcon from './smartphone'
 
 const useFetchPlayingSong = ({ spotify }) => {
   const [playingSong, setPlayingSong] = useState()
@@ -55,10 +57,9 @@ const useFirstSpotifyConnect = params => {
   const { spotify, fetchDevices, fetchPlayingSong, refresh, clear } = params
   useEffect(() => {
     const run = async () => {
-      const fst = spotify.me.profile().then(setMyself)
-      const snd = fetchDevices()
-      const trd = fetchPlayingSong().then(refresh)
-      await Promise.all([fst, snd, trd])
+      await spotify.me.profile().then(setMyself)
+      await fetchDevices()
+      await fetchPlayingSong().then(refresh)
     }
     if (spotify.logged) run()
     return clear
@@ -94,11 +95,14 @@ const onDeviceClick = ({ device, spotify, relaunch }) => async () => {
 }
 
 const renderDevice = ({ spotify, relaunch }) => device => {
-  const cl = device.is_active ? styles.activeDevice : styles.devicePill
+  const { is_active, type, name, id } = device
+  const cl = is_active ? styles.activeDevice : styles.devicePill
   const onClick = onDeviceClick({ device, spotify, relaunch })
   return (
-    <div key={device.id} className={cl} onClick={onClick}>
-      {device.name}
+    <div key={id} className={cl} onClick={onClick}>
+      {type === 'Computer' && <ComputerIcon className={styles.icon} />}
+      {type === 'Smartphone' && <SmartphoneIcon className={styles.icon} />}
+      {name}
     </div>
   )
 }

@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react'
 import Auguste from '../auguste'
 
-let token
+const readAccessToken = () => {
+  const item = localStorage.getItem('spotify')
+  return item ? JSON.parse(item) : null
+}
+
+let token = readAccessToken()
 
 const initialize = async () => {
-  const item = localStorage.getItem('spotify')
-  token = item ? JSON.parse(item) : null
+  token = readAccessToken()
   await window.spotifyInitialized
   return Boolean(token)
 }

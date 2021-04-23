@@ -1,10 +1,10 @@
-const ComputerIcon = props => (
+const ComputerIcon = ({ color, ...props }) => (
   <svg width="93px" height="78px" viewBox="0 0 93 78" version="1.1" {...props}>
     <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
       <g
         id="noun_Computer_304001"
         transform="translate(-5.000000, 0.700000)"
-        fill="#000000"
+        fill="var(--color)"
         fillRule="nonzero"
       >
         <path

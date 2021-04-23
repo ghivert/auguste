@@ -56,23 +56,27 @@
 }
 
 .devicePill {
+  --color: #999;
   background: rgb(14, 21, 26);
   padding: 12px 24px;
   border-radius: 20px;
   font-weight: 600;
   margin-right: 12px;
-  color: #999;
+  margin-bottom: 12px;
+  color: var(--color);
   cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.devicePill:last-child {
+  margin: 0;
 }
 
 .activeDevice {
   composes: devicePill;
+  --color: white;
   background: rgb(21, 30, 37);
-  color: white;
-}
-
-.devicePill:last-child {
-  margin-right: 0;
 }
 
 .albumCover {
@@ -107,4 +111,10 @@
   font-weight: 500;
   font-size: 1.3rem;
   color: #999;
+}
+
+.icon {
+  max-width: 20px;
+  margin-right: 12px;
+  max-height: 20px;
 }
