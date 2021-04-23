@@ -6,7 +6,7 @@ const url = require('./helpers/url')
 
 const client_id = '49c5b32767aa41f0b659462d7024cb10'
 const baseAuthorize = `https://accounts.spotify.com/authorize`
-const redirect_uri = 'http://localhost:3000/spotify'
+const redirect_uri = 'http://localhost:3000/oauth2/spotify'
 
 const generateChallenge = async () => {
   const codeVerifier = await crypto.randomBytes(48)

@@ -6,16 +6,20 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 import Auguste from './auguste'
 
-const SpotifyRedirect = () => {
+const extractParams = ({ search, location }) => {
+  const bindings = search
+    .slice(1)
+    .split('&')
+    .map(t => t.split('='))
+  const [last] = location.split('/').reverse()
+  const provider = last === 'oauth2' ? null : last
+  return [Object.fromEntries(bindings), provider]
+}
+
+const OAuth2Redirect = () => {
   useEffect(() => {
-    const { search } = window.location
-    const params = Object.fromEntries(
-      search
-        .slice(1)
-        .split('&')
-        .map(t => t.split('='))
-    )
-    Auguste.sendAccessToken(JSON.stringify(params))
+    const [params, provider] = extractParams(window.location)
+    Auguste.sendAccessToken(JSON.stringify({ ...params, provider }))
   }, [])
   return null
 }
@@ -24,12 +28,8 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Switch>
-        <Route path="/spotify">
-          <SpotifyRedirect />
-        </Route>
-        <Route path="/">
-          <App />
-        </Route>
+        <Route path="/oauth2" component={OAuth2Redirect} />
+        <Route path="/" component={App} />
       </Switch>
     </BrowserRouter>
   </React.StrictMode>,
