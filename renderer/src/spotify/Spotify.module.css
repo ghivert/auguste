@@ -1,0 +1,110 @@
+.spotify {
+  grid-area: spotify;
+  margin: 24px;
+  border-radius: 20px;
+  background: black;
+  box-shadow: var(--box-shadow);
+  color: white;
+}
+
+.spotifyLogo {
+  width: 220px;
+  padding: 12px 24px;
+  border-radius: 20px;
+}
+
+.spotifyLogo img {
+  width: 100%;
+}
+
+.spotifyConnect {
+  background: #1db954;
+  padding: 18px 36px;
+  border-radius: 30px;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin: 24px;
+  cursor: pointer;
+  appearance: none;
+  border: none;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  font-size: 1.2rem;
+  background: rgb(21, 30, 37);
+  align-self: flex-end;
+  padding: 4px 24px 4px 4px;
+  border-radius: 50px;
+}
+
+.profilePicture {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  margin-right: 12px;
+}
+
+.devices {
+  display: flex;
+  padding: 12px 0;
+  flex-wrap: wrap;
+}
+
+.devicePill {
+  background: rgb(14, 21, 26);
+  padding: 12px 24px;
+  border-radius: 20px;
+  font-weight: 600;
+  margin-right: 12px;
+  color: #999;
+  cursor: pointer;
+}
+
+.activeDevice {
+  composes: devicePill;
+  background: rgb(21, 30, 37);
+  color: white;
+}
+
+.devicePill:last-child {
+  margin-right: 0;
+}
+
+.albumCover {
+  width: 100px;
+  height: 100px;
+  border-radius: 3px;
+}
+
+.playingSong {
+  display: flex;
+  padding: 24px 0;
+}
+
+.albumInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  padding: 0 24px;
+}
+
+.trackName {
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.albumName {
+  composes: trackName;
+  color: #ccc;
+}
+
+.artistName {
+  font-weight: 500;
+  font-size: 1.3rem;
+  color: #999;
+}

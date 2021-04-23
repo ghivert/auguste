@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import Auguste from './auguste'
+import Auguste from '../auguste'
 
 let token
 

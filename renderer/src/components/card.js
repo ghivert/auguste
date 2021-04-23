@@ -21,6 +21,12 @@ const Header = ({ title, ...props }) => {
   )
 }
 
+const Body = ({ children, center }) => {
+  const cl = center ? styles.cardBodyCenter : styles.cardBody
+  return <div className={cl}>{children}</div>
+}
+
 Card.Header = Header
+Card.Body = Body
 
 export default Card

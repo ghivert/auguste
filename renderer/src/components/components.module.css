@@ -43,3 +43,19 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.cardBody {
+  max-width: 100%;
+  height: 100%;
+  padding: 0 24px;
+  padding-top: 104px;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.cardBodyCenter {
+  composes: cardBody;
+  align-items: center;
+  justify-content: center;
+}
