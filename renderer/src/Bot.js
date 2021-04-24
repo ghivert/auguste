@@ -146,13 +146,13 @@ const Bot = () => {
   const [messages, setMessages] = useState(readOldMessages)
   const scrollRef = useRef()
   const timeoutRef = useRef()
+  useEffect(() => clearTimeout(timeoutRef.current), [])
   useEffect(() => {
     localStorage.setItem('messages', JSON.stringify(messages))
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight
     }
   }, [messages])
-  useEffect(() => clearTimeout(timeoutRef.current), [])
   const onSubmit = async value => {
     const date = new Date()
     const text = value.replace(/<br>/g, '\n').trim()
