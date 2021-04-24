@@ -1,5 +1,5 @@
 const { app, BrowserWindow, ...electron } = require('electron')
-const window_ = require('./utils/window')
+const { hideWindow, showWindow, createWindow } = require('./utils/window')
 const spotify = require('./spotify')
 const store = require('./utils/store')
 const chatbot = require('./chatbot')
@@ -11,41 +11,39 @@ try {
   console.info(error)
 }
 
+const selectWindowHandler = win => {
+  if (win.isVisible()) {
+    return hideWindow(win)
+  } else {
+    return showWindow(win)
+  }
+}
+
 const configureApp = win => {
   const shortcut = 'CmdOrCtrl+Shift+Space'
-  electron.globalShortcut.register(shortcut, () => {
-    const handler = win.isVisible() ? window_.hideWindow : window_.showWindow
-    handler(win)
-  })
-  if (IS_PROD) {
-    app.dock.hide()
+  electron.globalShortcut.register(shortcut, () => selectWindowHandler(win))
+  if (IS_PROD) app.dock.hide()
+}
+
+const recreateWindow = () => {
+  if (BrowserWindow.getAllWindows().length === 0) {
+    createWindow()
+  }
+}
+
+const quitOnClose = () => {
+  if (process.platform !== 'darwin') {
+    app.quit()
   }
 }
 
 const launch = async () => {
   await app.whenReady()
-  const win = window_.createWindow()
+  const win = createWindow()
   configureApp(win)
 
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      window_.createWindow()
-    }
-  })
-
-  // win.on('blur', () => {
-  //   hideWindow(win)
-  // })
-
-  // electron.screen.on('display-metrics-changed', event => {
-  //   console.log(event)
-  // })
-
-  app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-      app.quit()
-    }
-  })
+  app.on('activate', recreateWindow)
+  app.on('window-all-closed', quitOnClose)
 
   return win
 }

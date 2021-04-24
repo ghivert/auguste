@@ -70,6 +70,15 @@ const generateOptions = () => {
 const createWindow = () => {
   const options = generateOptions()
   const win = new BrowserWindow(options)
+  const handler = () => {
+    const bounds = win.getContentBounds()
+    const screen = electron.screen.getDisplayMatching(bounds)
+    win.setContentBounds(screen.workArea)
+  }
+  electron.screen.on('display-metrics-changed', handler)
+  win.on('close', () => {
+    electron.screen.removeListener('display-metrics-changed', handler)
+  })
   if (IS_DEV) {
     win.loadURL('http://localhost:3000')
   } else {
