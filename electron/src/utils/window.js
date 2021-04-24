@@ -1,6 +1,6 @@
 const { BrowserWindow, ...electron } = require('electron')
 const path = require('path')
-const { IS_DEV, IS_PROD } = require('./env')
+const { IS_DEV, IS_PROD } = require('../env')
 
 const showWindow = async (win, value = 0.0) => {
   if (!win.isVisible()) {
@@ -60,7 +60,7 @@ const generateOptions = () => {
     vibrancy: 'hud',
     roundedCorners: true,
     webPreferences: {
-      preload: path.resolve(__dirname, 'preload.js'),
+      preload: path.resolve(__dirname, '../renderer/preload.js'),
       nodeIntegration: false,
     },
   }

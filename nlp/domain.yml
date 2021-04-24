@@ -27,6 +27,7 @@ responses:
   - text: Bye
   utter_iamabot:
   - text: I am a bot, powered by Rasa.
+  - text: I am a bot, I'm there to help you.
 actions:
 - check_for_weather
 - utter_greet

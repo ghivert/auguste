@@ -4,7 +4,7 @@
   "author": "Guillaume Hivert <hivert.is.coming@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "NODE_ENV=development electron src/server.js"
+    "start": "NODE_ENV=development electron src/main.js"
   },
   "devDependencies": {
     "electron": "^13.0.0-beta.14",

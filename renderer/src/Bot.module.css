@@ -43,7 +43,7 @@
 
 .genericMessage {
   padding: 12px;
-  margin: 1px 24px;
+  margin: 2px 24px;
   background: white;
   max-width: 60%;
   border-radius: 20px;
@@ -102,4 +102,14 @@
   .date {
     color: #777;
   }
+}
+
+.imageMessage {
+  width: 100%;
+  display: block;
+  border-radius: 20px;
+}
+
+.imageWrapperMessage {
+  padding: 0px;
 }

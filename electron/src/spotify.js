@@ -3,6 +3,7 @@ const fetch = require('node-fetch')
 const path = require('path')
 const crypto = require('./helpers/crypto')
 const url = require('./helpers/url')
+const { SEND_ACCESS_TOKEN } = require('./channels')
 
 const client_id = '49c5b32767aa41f0b659462d7024cb10'
 const baseAuthorize = `https://accounts.spotify.com/authorize`
@@ -18,7 +19,7 @@ const generateChallenge = async () => {
 const accessTokenResponse = () => {
   return new Promise(resolve => {
     const handler = (event, token) => resolve(token)
-    ipcMain.once('send-access-token', handler)
+    ipcMain.once(SEND_ACCESS_TOKEN, handler)
   })
 }
 

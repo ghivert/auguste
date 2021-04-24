@@ -1,5 +1,6 @@
-import { Fragment, useState, useRef } from 'react'
+import { Fragment, useState, useRef, useEffect } from 'react'
 import Card from './components/card'
+import Auguste from './auguste'
 import styles from './Bot.module.css'
 
 const moveCursor = (el, position) => {
@@ -39,13 +40,12 @@ const TextInput = ({ onSubmit }) => {
       setTextInput('Aa')
     }
   }
+  const greyText = textInput === 'Aa' && styles.greyText
   return (
     <div className={styles.textInputWrapper}>
       <div className={styles.textInput}>
         <span
-          className={`${styles.textInputInside} ${
-            textInput === 'Aa' && styles.greyText
-          }`}
+          className={`${styles.textInputInside} ${greyText}`}
           contentEditable
           suppressContentEditableWarning
           ref={contentRef}
@@ -60,38 +60,53 @@ const TextInput = ({ onSubmit }) => {
   )
 }
 
-const renderMessage = ({ text, sender, date }, index, messages) => {
+const toLocaleString = ({ date, nextDate }) => {
+  const isDifferentDate = nextDate?.getDay() !== date.getDay()
+  const options = { year: 'numeric', month: 'long', day: 'numeric' }
+  const selections = isDifferentDate ? options : {}
+  return date.toLocaleString('fr-fr', {
+    ...selections,
+    hour: 'numeric',
+    minute: 'numeric',
+  })
+}
+
+const renderMessage = ({ text, image, sender, date }, index, messages) => {
   const lgth = messages.length
   const previousMessage = index - 1 >= 0 ? messages[index - 1] : null
   const nextMessage = index + 1 < lgth ? messages[index + 1] : null
   const sameAsNext = nextMessage?.sender === sender
   const sameAsPrevious = previousMessage?.sender === sender
-  const style = {
+  const commonStyle = {
     borderTopLeftRadius: sameAsNext && sender === 'auguste' && '10px',
     borderTopRightRadius: sameAsNext && sender === 'user' && '10px',
     borderBottomLeftRadius: sameAsPrevious && sender === 'auguste' && '10px',
     borderBottomRightRadius: sameAsPrevious && sender === 'user' && '10px',
+  }
+  const style = {
+    ...commonStyle,
     marginBottom: !sameAsPrevious && '6px',
     marginTop: !sameAsNext && '6px',
   }
   const diff = nextMessage?.date - date
   const delta = isNaN(diff) ? Date.now() : diff
-  const className = sender === 'user' ? styles.userMessage : styles.botMessage
+  const sideClass = sender === 'user' ? styles.userMessage : styles.botMessage
+  const clName = `${sideClass} ${Boolean(image) && styles.imageWrapperMessage}`
   return (
     <Fragment key={index}>
-      <div className={className} style={style}>
-        {text}
+      <div className={clName} style={style}>
+        {text || (
+          <img
+            src={image}
+            className={styles.imageMessage}
+            alt={image}
+            style={commonStyle}
+          />
+        )}
       </div>
-
       {!sameAsNext && delta > 5000 && (
         <div className={sender === 'user' ? styles.userDate : styles.botDate}>
-          {date.toLocaleString('fr-fr', {
-            ...(nextMessage?.date?.getDate() !== date.getDay()
-              ? { year: 'numeric', month: 'long', day: 'numeric' }
-              : {}),
-            hour: 'numeric',
-            minute: 'numeric',
-          })}
+          {toLocaleString({ date, nextDate: nextMessage?.date })}
         </div>
       )}
     </Fragment>
@@ -120,15 +135,33 @@ const readOldMessages = () => {
 
 const Bot = () => {
   const [messages, setMessages] = useState(readOldMessages)
-  const onSubmit = value => {
+  const scrollRef = useRef()
+  useEffect(() => {
+    localStorage.setItem('messages', JSON.stringify(messages))
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight
+    }
+  }, [messages])
+  const onSubmit = async value => {
     const date = new Date()
     const text = value.replace(/<br>/g, '\n').trim()
-    setMessages([{ text, sender: 'user', date }, ...messages])
+    setMessages(mess => [{ text, sender: 'user', date }, ...mess])
+    const res = await Auguste.tell(text)
+    const sender = 'auguste'
+    if (res.success) {
+      res.content.forEach(({ text, image }) => {
+        const date = new Date()
+        const newMessage = { text, image, sender, date, type: 'success' }
+        setMessages(mess => [newMessage, ...mess])
+      })
+    }
   }
   return (
     <Card className={styles.bot}>
       <Card.Header title="Auguste" />
-      <div className={styles.messageContent}>{messages.map(renderMessage)}</div>
+      <div className={styles.messageContent} ref={scrollRef}>
+        {messages.map(renderMessage)}
+      </div>
       <TextInput onSubmit={onSubmit} />
     </Card>
   )
