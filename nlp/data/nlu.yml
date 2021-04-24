@@ -85,4 +85,4 @@ nlu:
     - am I talking to a human?
 - intent: ask_weather
   examples: |
-    - [Tell me what ]{"entity": "town", "value": "San Francisco"}is the weather outside in San Francisco
+    - what is the weather?

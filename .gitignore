@@ -28,3 +28,4 @@ nlp/results/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+auguste.log*

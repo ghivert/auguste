@@ -13,6 +13,8 @@
     "prettier": "^2.2.1"
   },
   "dependencies": {
+    "@frenchpastries/arrange": "^0.2.1",
+    "@frenchpastries/millefeuille": "^0.1.11",
     "@monaco-editor/react": "^4.1.1",
     "base64url": "^3.0.1",
     "node-fetch": "^2.6.1"

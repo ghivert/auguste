@@ -102,6 +102,9 @@ const renderDevice = ({ spotify, relaunch }) => device => {
     <div key={id} className={cl} onClick={onClick}>
       {type === 'Computer' && <ComputerIcon className={styles.icon} />}
       {type === 'Smartphone' && <SmartphoneIcon className={styles.icon} />}
+      {type !== 'Smartphone' && type !== 'Computer' && (
+        <ComputerIcon className={styles.icon} />
+      )}
       {name}
     </div>
   )

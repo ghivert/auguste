@@ -11,3 +11,8 @@ rules:
   steps:
   - intent: bot_challenge
   - action: utter_iamabot
+
+- rule: Check the weather
+  steps:
+  - intent: ask_weather
+  - action: check_for_weather

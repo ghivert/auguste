@@ -5,6 +5,7 @@ const store = require('./utils/store')
 const chatbot = require('./chatbot')
 const { IS_PROD } = require('./env')
 const { SAVE, READ, OAUTH, OAUTH_REFRESH, CHATBOT_TELL } = require('./channels')
+const Server = require('./actions')
 try {
   require('electron-reloader')(module, { watchRenderer: false })
 } catch (error) {
@@ -40,10 +41,12 @@ const quitOnClose = () => {
 const launch = async () => {
   await app.whenReady()
   const win = createWindow()
+  const server = Server.start()
   configureApp(win)
 
   app.on('activate', recreateWindow)
   app.on('window-all-closed', quitOnClose)
+  app.on('will-quit', () => Server.stop(server))
 
   return win
 }

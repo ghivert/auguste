@@ -30,4 +30,3 @@ responses:
   - text: I am a bot, I'm there to help you.
 actions:
 - check_for_weather
-- utter_greet
