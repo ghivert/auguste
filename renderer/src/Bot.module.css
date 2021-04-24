@@ -113,3 +113,42 @@
 .imageWrapperMessage {
   padding: 0px;
 }
+
+.composingMessage {
+  composes: botMessage;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dot:global {
+  width: 16px;
+  height: 16px;
+  border-radius: 10px;
+  background: #444;
+  margin: 3px 6px;
+  animation: 1s linear 0s infinite alternate backgroundswitch;
+}
+
+/* prettier-ignore */
+@keyframes :global(backgroundswitch) {
+  0% { background: #444; }
+  50 % { background: #444; }
+  75 % { background: #555; }
+  100% { background: #999; }
+}
+
+.firstDot {
+  composes: dot;
+  animation-delay: 0s;
+}
+
+.secondDot {
+  composes: dot;
+  animation-delay: 0.35s;
+}
+
+.thirdDot {
+  composes: dot;
+  animation-delay: 0.65s;
+}

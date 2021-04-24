@@ -133,33 +133,52 @@ const readOldMessages = () => {
   }
 }
 
+const RenderComposing = () => (
+  <div className={styles.composingMessage}>
+    <div className={styles.firstDot} />
+    <div className={styles.secondDot} />
+    <div className={styles.thirdDot} />
+  </div>
+)
+
 const Bot = () => {
+  const [composing, setComposing] = useState(false)
   const [messages, setMessages] = useState(readOldMessages)
   const scrollRef = useRef()
+  const timeoutRef = useRef()
   useEffect(() => {
     localStorage.setItem('messages', JSON.stringify(messages))
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight
     }
   }, [messages])
+  useEffect(() => clearTimeout(timeoutRef.current), [])
   const onSubmit = async value => {
     const date = new Date()
     const text = value.replace(/<br>/g, '\n').trim()
     setMessages(mess => [{ text, sender: 'user', date }, ...mess])
+    setComposing(true)
+    const ts = Date.now()
     const res = await Auguste.tell(text)
     const sender = 'auguste'
-    if (res.success) {
-      res.content.forEach(({ text, image }) => {
-        const date = new Date()
-        const newMessage = { text, image, sender, date, type: 'success' }
-        setMessages(mess => [newMessage, ...mess])
-      })
-    }
+    const delta = Date.now() - ts
+    const diff = 500 - delta < 0 ? 0 : 500 - delta
+    timeoutRef.current = setTimeout(() => {
+      setComposing(false)
+      if (res.success) {
+        res.content.forEach(({ text, image }) => {
+          const date = new Date()
+          const newMessage = { text, image, sender, date, type: 'success' }
+          setMessages(mess => [newMessage, ...mess])
+        })
+      }
+    }, diff)
   }
   return (
     <Card className={styles.bot}>
       <Card.Header title="Auguste" />
       <div className={styles.messageContent} ref={scrollRef}>
+        {composing && <RenderComposing />}
         {messages.map(renderMessage)}
       </div>
       <TextInput onSubmit={onSubmit} />
