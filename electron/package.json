@@ -6,17 +6,17 @@
   "scripts": {
     "start": "NODE_ENV=development electron src/main.js"
   },
-  "devDependencies": {
-    "electron": "^13.0.0-beta.14",
-    "electron-reloader": "^1.2.0",
-    "eslint": "^7.24.0",
-    "prettier": "^2.2.1"
-  },
   "dependencies": {
-    "@frenchpastries/arrange": "^0.2.1",
-    "@frenchpastries/millefeuille": "^0.1.11",
-    "@monaco-editor/react": "^4.1.1",
+    "@frenchpastries/arrange": "^0.3.1",
+    "@frenchpastries/millefeuille": "^0.3.0",
+    "@monaco-editor/react": "^4.3.1",
     "base64url": "^3.0.1",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^3.1.0"
+  },
+  "devDependencies": {
+    "electron": "^16.0.7",
+    "electron-reloader": "^1.2.1",
+    "eslint": "^8.6.0",
+    "prettier": "^2.5.1"
   }
 }
