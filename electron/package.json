@@ -1,22 +1,27 @@
 {
-  "name": "elwyn",
+  "name": "auguste",
   "version": "1.0.0",
   "author": "Guillaume Hivert <hivert.is.coming@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "NODE_ENV=development electron src/main.js"
+    "start": "NODE_ENV=development electron src/main.js",
+    "build": "tsc"
+  },
+  "engines": {
+    "node": ">=16"
   },
   "dependencies": {
-    "@frenchpastries/arrange": "^0.3.1",
-    "@frenchpastries/millefeuille": "^0.3.0",
+    "@frenchpastries/arrange": "^1.0.0",
+    "@frenchpastries/millefeuille": "^1.0.2",
     "@monaco-editor/react": "^4.3.1",
     "base64url": "^3.0.1",
-    "node-fetch": "^3.1.0"
+    "node-fetch": "^3.2.0",
+    "typescript": "^4.5.5"
   },
   "devDependencies": {
-    "electron": "^16.0.7",
+    "electron": "^17.0.0",
     "electron-reloader": "^1.2.1",
-    "eslint": "^8.6.0",
+    "eslint": "^8.8.0",
     "prettier": "^2.5.1"
   }
 }

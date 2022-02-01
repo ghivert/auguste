@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import './index.css'
-import App from './App'
+import { App } from './App'
+import { Auguste } from './auguste'
 import reportWebVitals from './reportWebVitals'
-import Auguste from './auguste'
+import './index.css'
 
 const extractParams = ({ search, pathname }) => {
   const bindings = search

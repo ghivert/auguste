@@ -1,18 +1,19 @@
-const { app, BrowserWindow, ...electron } = require('electron')
-const { hideWindow, showWindow, createWindow } = require('./utils/window')
-const spotify = require('./spotify')
-const store = require('./utils/store')
-const chatbot = require('./chatbot')
-const { IS_PROD } = require('./env')
-const { SAVE, READ, OAUTH, OAUTH_REFRESH, CHATBOT_TELL } = require('./channels')
-const Server = require('./actions')
+import * as electron from 'electron'
+import * as spotify from './spotify'
+import * as store from './utils/store'
+import * as chatbot from './chatbot'
+import * as Server from './actions'
+import { app, BrowserWindow } from 'electron'
+import { hideWindow, showWindow, createWindow } from './utils/window'
+import { IS_PROD } from './env'
+import { SAVE, READ, OAUTH, OAUTH_REFRESH, CHATBOT_TELL } from './channels'
 try {
   require('electron-reloader')(module, { watchRenderer: false })
 } catch (error) {
   console.info(error)
 }
 
-const selectWindowHandler = win => {
+const selectWindowHandler = (win: BrowserWindow) => {
   if (win.isVisible()) {
     return hideWindow(win)
   } else {
@@ -20,7 +21,7 @@ const selectWindowHandler = win => {
   }
 }
 
-const configureApp = win => {
+const configureApp = (win: BrowserWindow) => {
   const shortcut = 'CmdOrCtrl+Shift+Space'
   electron.globalShortcut.register(shortcut, () => selectWindowHandler(win))
   if (IS_PROD) app.dock.hide()
@@ -51,38 +52,40 @@ const launch = async () => {
   return win
 }
 
-const saveHandler = async (event, { fileName, content }) => {
+const saveHandler = async (event: any, { fileName, content }: any) => {
   await store.write(fileName, content)
   event.reply(SAVE, true)
 }
 
-const readHandler = async (event, { fileName }) => {
+const readHandler = async (event: any, { fileName }: any) => {
   const content = await store.get(fileName)
   event.reply(READ, content)
 }
 
-const oauth2Handler = win => async (event, { provider }) => {
-  const token = await (async () => {
-    switch (provider) {
-      case 'spotify':
-        return spotify.authorize(win)
-    }
-  })()
-  event.reply(OAUTH, token)
+const oauth2Handler = (win: BrowserWindow) => {
+  return async (event: any, { provider }: any) => {
+    const token = await (async () => {
+      switch (provider) {
+        case 'spotify':
+          return spotify.authorize(win)
+      }
+    })()
+    event.reply(OAUTH, token)
+  }
 }
 
-const oauth2RefreshHandler = async (event, params) => {
+const oauth2RefreshHandler = async (event: any, params: any) => {
   const { provider, refresh_token } = params
   const token = await (async () => {
     switch (provider) {
       case 'spotify':
-        return spotify.refresh({ refresh_token })
+        return spotify.refresh(refresh_token)
     }
   })()
   event.reply(OAUTH_REFRESH, token)
 }
 
-const chatbotHandler = async (event, { message }) => {
+const chatbotHandler = async (event: any, { message }: any) => {
   try {
     const content = await chatbot.request({ message })
     event.reply(CHATBOT_TELL, { type: 'success', content })
@@ -93,7 +96,6 @@ const chatbotHandler = async (event, { message }) => {
 
 const main = async () => {
   const win = await launch()
-
   electron.ipcMain.on(SAVE, saveHandler)
   electron.ipcMain.on(READ, readHandler)
   electron.ipcMain.on(OAUTH, oauth2Handler(win))

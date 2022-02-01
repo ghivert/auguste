@@ -1,9 +1,9 @@
-const { BrowserWindow, ipcMain } = require('electron')
-const fetch = require('node-fetch')
-const path = require('path')
-const crypto = require('./helpers/crypto')
-const url = require('./helpers/url')
-const { SEND_ACCESS_TOKEN } = require('./channels')
+import * as path from 'path'
+import * as crypto from './helpers/crypto'
+import * as url from './helpers/url'
+import fetch from 'node-fetch'
+import { BrowserWindow, ipcMain } from 'electron'
+import { SEND_ACCESS_TOKEN } from './channels'
 
 const client_id = '49c5b32767aa41f0b659462d7024cb10'
 const baseAuthorize = `https://accounts.spotify.com/authorize`
@@ -17,13 +17,14 @@ const generateChallenge = async () => {
 }
 
 const accessTokenResponse = () => {
-  return new Promise(resolve => {
-    const handler = (event, token) => resolve(token)
-    ipcMain.once(SEND_ACCESS_TOKEN, handler)
+  return new Promise<string>(resolve => {
+    ipcMain.once(SEND_ACCESS_TOKEN, (_event, token: string) => {
+      resolve(token)
+    })
   })
 }
 
-const openPopup = async (parent, uri) => {
+const openPopup = async (parent: BrowserWindow, uri: string) => {
   const preload = path.resolve(__dirname, 'preload.js')
   const webPreferences = { preload, nodeIntegration: false }
   const authWindow = new BrowserWindow({
@@ -38,7 +39,7 @@ const openPopup = async (parent, uri) => {
   return JSON.parse(message)
 }
 
-const getAuthorizationCode = async parent => {
+const getAuthorizationCode = async (parent: BrowserWindow) => {
   const challenge = await generateChallenge()
   const params = {
     client_id,
@@ -70,7 +71,7 @@ const getAuthorizationCode = async parent => {
   }
 }
 
-const getAccessToken = async ({ code, codeVerifier }) => {
+const getAccessToken = async (code: string, codeVerifier: string) => {
   const values = {
     client_id,
     code,
@@ -85,13 +86,13 @@ const getAccessToken = async ({ code, codeVerifier }) => {
   return await res.json()
 }
 
-const authorize = async parent => {
+export const authorize = async (parent: BrowserWindow) => {
   const result = await getAuthorizationCode(parent)
-  const results = await getAccessToken(result)
+  const results = await getAccessToken(result.code, result.codeVerifier)
   return results
 }
 
-const refresh = async ({ refresh_token }) => {
+export const refresh = async (refresh_token: string) => {
   const grant_type = 'refresh_token'
   const body = url.encodeFormURL({ grant_type, refresh_token, client_id })
   const headers = { 'Content-Type': 'application/x-www-form-urlencoded' }
@@ -99,5 +100,3 @@ const refresh = async ({ refresh_token }) => {
   const res = await fetch('https://accounts.spotify.com/api/token', options)
   return res.json()
 }
-
-module.exports = { authorize, refresh }

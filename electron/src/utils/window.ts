@@ -1,14 +1,15 @@
-const { BrowserWindow, ...electron } = require('electron')
-const path = require('path')
-const { IS_DEV, IS_PROD } = require('../env')
+import { BrowserWindow } from 'electron'
+import * as electron from 'electron'
+import * as path from 'path'
+import { IS_DEV, IS_PROD } from '../env'
 
-const showWindow = async (win, value = 0.0) => {
+export const showWindow = async (win: BrowserWindow, value = 0.0) => {
   if (!win.isVisible()) {
     electron.app.focus()
     win.focus()
     win.show()
   }
-  return new Promise(resolve =>
+  return new Promise<void>(resolve =>
     setTimeout(async () => {
       if (value < 1.0) {
         const newValue = value + 0.01
@@ -20,8 +21,8 @@ const showWindow = async (win, value = 0.0) => {
   )
 }
 
-const hideWindow = async (win, value = 1.0) => {
-  return new Promise(resolve =>
+export const hideWindow = async (win: BrowserWindow, value = 1.0) => {
+  return new Promise<void>(resolve =>
     setTimeout(async () => {
       if (value > 0.0) {
         const newValue = value - 0.01
@@ -47,11 +48,11 @@ const getActiveDisplay = () => {
   return { x, y, width, height }
 }
 
-const generateOptions = () => {
+const generateOptions = (): electron.BrowserWindowConstructorOptions => {
   const scr = getActiveDisplay()
   const opacity = IS_DEV ? 1 : 0
   const show = IS_DEV
-  const options = {
+  const options: electron.BrowserWindowConstructorOptions = {
     alwaysOnTop: IS_PROD,
     resizable: false,
     movable: false,
@@ -67,7 +68,7 @@ const generateOptions = () => {
   return { ...scr, ...options, opacity, show }
 }
 
-const createWindow = () => {
+export const createWindow = () => {
   const options = generateOptions()
   const win = new BrowserWindow(options)
   const handler = () => {
@@ -85,10 +86,4 @@ const createWindow = () => {
     showWindow(win)
   }
   return win
-}
-
-module.exports = {
-  createWindow,
-  hideWindow,
-  showWindow,
 }

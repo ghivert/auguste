@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import Auguste from '../auguste'
+import { Auguste } from '../auguste'
 
 const readAccessToken = () => {
   const item = localStorage.getItem('spotify')

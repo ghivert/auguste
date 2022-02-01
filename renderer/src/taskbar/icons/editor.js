@@ -1,4 +1,4 @@
-const EditorIcon = ({ color, ...props }) => (
+export const EditorIcon = ({ color, ...props }) => (
   <svg width="40px" height="40px" viewBox="0 0 20 20" {...props}>
     <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
       <g id="noun_text-editor_1237719" fill={color} fillRule="nonzero">
@@ -16,5 +16,3 @@ const EditorIcon = ({ color, ...props }) => (
     </g>
   </svg>
 )
-
-export default EditorIcon

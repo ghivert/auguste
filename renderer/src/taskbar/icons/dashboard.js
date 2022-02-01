@@ -1,4 +1,4 @@
-const DashboardIcons = ({ color, ...props }) => (
+export const DashboardIcons = ({ color, ...props }) => (
   <svg width="40px" height="40px" viewBox="0 0 68 68" {...props}>
     <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
       <g id="noun_dashboard_3865696" fill={color} fillRule="nonzero">
@@ -9,5 +9,3 @@ const DashboardIcons = ({ color, ...props }) => (
     </g>
   </svg>
 )
-
-export default DashboardIcons

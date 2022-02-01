@@ -1,3 +1,1 @@
-const Auguste = window.auguste
-
-export default Auguste
+export const Auguste = window.auguste

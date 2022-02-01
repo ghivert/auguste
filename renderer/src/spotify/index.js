@@ -1,10 +1,10 @@
 import { useState, useRef, useCallback, useEffect } from 'react'
 import { useSpotify } from './api'
-import Card from '../components/card'
+import * as Card from '../components/card'
+import { ComputerIcon } from './computer'
+import { SmartphoneIcon } from './smartphone'
 import styles from './Spotify.module.css'
 import spotifyLogo from './spotify.png'
-import ComputerIcon from './computer'
-import SmartphoneIcon from './smartphone'
 
 const useFetchPlayingSong = ({ spotify }) => {
   const [playingSong, setPlayingSong] = useState()
@@ -88,27 +88,31 @@ const Connection = ({ spotify }) => (
   </Card.Body>
 )
 
-const onDeviceClick = ({ device, spotify, relaunch }) => async () => {
-  await spotify.me.player.transfer(device.id)
-  await new Promise(r => setTimeout(r, 100))
-  await relaunch()
-}
+const onDeviceClick =
+  ({ device, spotify, relaunch }) =>
+  async () => {
+    await spotify.me.player.transfer(device.id)
+    await new Promise(r => setTimeout(r, 100))
+    await relaunch()
+  }
 
-const renderDevice = ({ spotify, relaunch }) => device => {
-  const { is_active, type, name, id } = device
-  const cl = is_active ? styles.activeDevice : styles.devicePill
-  const onClick = onDeviceClick({ device, spotify, relaunch })
-  return (
-    <div key={id} className={cl} onClick={onClick}>
-      {type === 'Computer' && <ComputerIcon className={styles.icon} />}
-      {type === 'Smartphone' && <SmartphoneIcon className={styles.icon} />}
-      {type !== 'Smartphone' && type !== 'Computer' && (
-        <ComputerIcon className={styles.icon} />
-      )}
-      {name}
-    </div>
-  )
-}
+const renderDevice =
+  ({ spotify, relaunch }) =>
+  device => {
+    const { is_active, type, name, id } = device
+    const cl = is_active ? styles.activeDevice : styles.devicePill
+    const onClick = onDeviceClick({ device, spotify, relaunch })
+    return (
+      <div key={id} className={cl} onClick={onClick}>
+        {type === 'Computer' && <ComputerIcon className={styles.icon} />}
+        {type === 'Smartphone' && <SmartphoneIcon className={styles.icon} />}
+        {type !== 'Smartphone' && type !== 'Computer' && (
+          <ComputerIcon className={styles.icon} />
+        )}
+        {name}
+      </div>
+    )
+  }
 
 const RenderProfile = ({ myself }) => {
   const src = myself?.images?.[0]?.url
@@ -150,16 +154,14 @@ const Main = ({ spotify }) => {
   )
 }
 
-const Spotify = () => {
+export const Spotify = () => {
   const spotify = useSpotify()
   const props = { spotify }
   const logged = spotify.logged
   return (
-    <Card className={styles.spotify}>
+    <Card.Card className={styles.spotify}>
       <Card.Header title="Spotify" />
       {logged ? <Main {...props} /> : <Connection {...props} />}
-    </Card>
+    </Card.Card>
   )
 }
-
-export default Spotify

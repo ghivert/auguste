@@ -1,17 +1,17 @@
-import { Fragment, useState, useRef, useEffect, useCallback } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import Editor from '@monaco-editor/react'
-import Bot from './Bot'
+import { Bot } from './Bot'
+import { Taskbar } from './taskbar'
+import * as Card from './components/card'
+import { Auguste } from './auguste'
+import { Spotify } from './spotify'
 import styles from './App.module.css'
 import runArrow from './run-arrow.svg'
-import Taskbar from './taskbar'
-import Card from './components/card'
-import Auguste from './auguste'
-import Spotify from './spotify'
 
 const TextEditor = () => {
   const codeRef = useRef()
   const [script, setScript] = useState('')
-  const onMount = (editor, monaco) => (codeRef.current = editor)
+  const onMount = (editor, _monaco) => (codeRef.current = editor)
   const sendToMainProcess = code => {
     setScript(code)
     Auguste.save('monaco.js', code)
@@ -20,7 +20,7 @@ const TextEditor = () => {
   useEffect(() => Auguste.read('monaco.js').then(setScript), [])
   useEffect(() => Auguste.onResult(console.log), [])
   return (
-    <Card area="panel" className={styles.textEditor}>
+    <Card.Card area="panel" className={styles.textEditor}>
       <Card.Header className={styles.cardHeader} title="Run your scripts">
         <img
           className={styles.runArrow}
@@ -37,28 +37,28 @@ const TextEditor = () => {
         onChange={sendToMainProcess}
         className={styles.monaco}
       />
-    </Card>
+    </Card.Card>
   )
 }
 
 const Dashboard = () => {
   return (
-    <Card area="panel" className={styles.dashboard}>
+    <Card.Card area="panel" className={styles.dashboard}>
       <Card.Header title="Dashboard" />
       <Spotify />
-    </Card>
+    </Card.Card>
   )
 }
 
 const Settings = () => {
   return (
-    <Card area="panel">
+    <Card.Card area="panel">
       <Card.Header title="Settings" />
-    </Card>
+    </Card.Card>
   )
 }
 
-const App = () => {
+export const App = () => {
   const [panel, setPanel] = useState('dashboard')
   return (
     <div className={styles.main}>
@@ -70,5 +70,3 @@ const App = () => {
     </div>
   )
 }
-
-export default App

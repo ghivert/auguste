@@ -1,6 +1,6 @@
 import { Fragment, useState, useRef, useEffect } from 'react'
-import Card from './components/card'
-import Auguste from './auguste'
+import * as Card from './components/card'
+import { Auguste } from './auguste'
 import styles from './Bot.module.css'
 
 const moveCursor = (el, position) => {
@@ -141,12 +141,12 @@ const RenderComposing = () => (
   </div>
 )
 
-const Bot = () => {
+export const Bot = () => {
   const [composing, setComposing] = useState(false)
   const [messages, setMessages] = useState(readOldMessages)
   const scrollRef = useRef()
   const timeoutRef = useRef()
-  useEffect(() => clearTimeout(timeoutRef.current), [])
+  useEffect(() => () => clearTimeout(timeoutRef.current), [])
   useEffect(() => {
     localStorage.setItem('messages', JSON.stringify(messages))
     if (scrollRef.current) {
@@ -175,15 +175,13 @@ const Bot = () => {
     }, diff)
   }
   return (
-    <Card className={styles.bot}>
+    <Card.Card className={styles.bot}>
       <Card.Header title="Auguste" />
       <div className={styles.messageContent} ref={scrollRef}>
         {composing && <RenderComposing />}
         {messages.map(renderMessage)}
       </div>
       <TextInput onSubmit={onSubmit} />
-    </Card>
+    </Card.Card>
   )
 }
-
-export default Bot

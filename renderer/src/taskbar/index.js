@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import EditorIcon from './icons/editor'
-import DashboardIcon from './icons/dashboard'
-import SettingsIcon from './icons/settings'
+import { EditorIcon } from './icons/editor'
+import { DashboardIcon } from './icons/dashboard'
+import { SettingsIcon } from './icons/settings'
 import styles from './Taskbar.module.css'
 
 const prependZero = value => {
@@ -30,7 +30,7 @@ const Spacer = ({ size }) => {
   return <div style={style} />
 }
 
-const Taskbar = ({ activePanel, onIconClick }) => {
+export const Taskbar = ({ activePanel, onIconClick }) => {
   const dashColor = activePanel === 'dashboard' ? '' : '-disabled'
   const editorColor = activePanel === 'editor' ? '' : '-disabled'
   const settingsColor = activePanel === 'settings' ? '' : '-disabled'
@@ -58,5 +58,3 @@ const Taskbar = ({ activePanel, onIconClick }) => {
     </div>
   )
 }
-
-export default Taskbar
