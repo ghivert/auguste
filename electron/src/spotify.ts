@@ -1,7 +1,7 @@
 import * as path from 'path'
 import * as crypto from './helpers/crypto'
 import * as url from './helpers/url'
-import fetch from 'node-fetch'
+import fetch from './utils/fetch'
 import { BrowserWindow, ipcMain } from 'electron'
 import { SEND_ACCESS_TOKEN } from './channels'
 

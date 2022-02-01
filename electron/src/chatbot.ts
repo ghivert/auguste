@@ -1,4 +1,4 @@
-import fetch from 'node-fetch'
+import fetch from './utils/fetch'
 
 const rasaURL = 'http://localhost:5005'
 const webhookURL = `${rasaURL}/webhooks/rest/webhook`

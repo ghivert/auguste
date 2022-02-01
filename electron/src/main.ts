@@ -44,11 +44,9 @@ const launch = async () => {
   const win = createWindow()
   const server = Server.start()
   configureApp(win)
-
   app.on('activate', recreateWindow)
   app.on('window-all-closed', quitOnClose)
   app.on('will-quit', () => Server.stop(server))
-
   return win
 }
 

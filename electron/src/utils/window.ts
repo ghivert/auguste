@@ -59,7 +59,7 @@ const generateOptions = (): electron.BrowserWindowConstructorOptions => {
     frame: false,
     visualEffectState: 'active',
     vibrancy: 'hud',
-    roundedCorners: true,
+    roundedCorners: false,
     webPreferences: {
       preload: path.resolve(__dirname, '../renderer/preload.js'),
       nodeIntegration: false,

@@ -1,4 +1,4 @@
-import MilleFeuille from '@frenchpastries/millefeuille'
+import * as MilleFeuille from '@frenchpastries/millefeuille'
 import { response } from '@frenchpastries/millefeuille/response'
 import * as arrange from '@frenchpastries/arrange'
 import * as http from 'http'
