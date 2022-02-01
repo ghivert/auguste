@@ -146,7 +146,7 @@ export const Bot = () => {
   const [messages, setMessages] = useState(readOldMessages)
   const scrollRef = useRef()
   const timeoutRef = useRef()
-  useEffect(() => () => clearTimeout(timeoutRef.current), [])
+  useEffect(() => clearTimeout(timeoutRef.current), [])
   useEffect(() => {
     localStorage.setItem('messages', JSON.stringify(messages))
     if (scrollRef.current) {
@@ -165,15 +165,17 @@ export const Bot = () => {
     const diff = 500 - delta < 0 ? 0 : 500 - delta
     timeoutRef.current = setTimeout(() => {
       setComposing(false)
-      if (res.success) {
+      if (res.type === 'success') {
         res.content.forEach(({ text, image }) => {
           const date = new Date()
           const newMessage = { text, image, sender, date, type: 'success' }
+          console.log(newMessage)
           setMessages(mess => [newMessage, ...mess])
         })
       }
     }, diff)
   }
+  console.log(messages)
   return (
     <Card.Card className={styles.bot}>
       <Card.Header title="Auguste" />

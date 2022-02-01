@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { App } from './App'
 import { Auguste } from './auguste'
 import reportWebVitals from './reportWebVitals'
@@ -27,10 +27,10 @@ const OAuth2Redirect = () => {
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Switch>
-        <Route path="/oauth2" component={OAuth2Redirect} />
-        <Route path="/" component={App} />
-      </Switch>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/oauth2" element={<OAuth2Redirect />} />
+      </Routes>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

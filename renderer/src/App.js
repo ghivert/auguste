@@ -45,7 +45,7 @@ const Dashboard = () => {
   return (
     <Card.Card area="panel" className={styles.dashboard}>
       <Card.Header title="Dashboard" />
-      <Spotify />
+      {false && <Spotify />}
     </Card.Card>
   )
 }

@@ -1,9 +1,9 @@
 import * as path from 'path'
-import * as crypto from './helpers/crypto'
-import * as url from './helpers/url'
-import fetch from './utils/fetch'
+import * as crypto from '../helpers/crypto'
+import * as url from '../helpers/url'
+import fetch from '../utils/fetch'
 import { BrowserWindow, ipcMain } from 'electron'
-import { SEND_ACCESS_TOKEN } from './channels'
+import { SEND_ACCESS_TOKEN } from '../ipc/channels'
 
 const client_id = '49c5b32767aa41f0b659462d7024cb10'
 const baseAuthorize = `https://accounts.spotify.com/authorize`
@@ -83,7 +83,7 @@ const getAccessToken = async (code: string, codeVerifier: string) => {
   const headers = { 'Content-Type': 'application/x-www-form-urlencoded' }
   const options = { method: 'POST', headers, body }
   const res = await fetch('https://accounts.spotify.com/api/token', options)
-  return await res.json()
+  return (await res.json()) as Object
 }
 
 export const authorize = async (parent: BrowserWindow) => {
@@ -98,5 +98,5 @@ export const refresh = async (refresh_token: string) => {
   const headers = { 'Content-Type': 'application/x-www-form-urlencoded' }
   const options = { method: 'POST', headers, body }
   const res = await fetch('https://accounts.spotify.com/api/token', options)
-  return res.json()
+  return res.json() as Object
 }

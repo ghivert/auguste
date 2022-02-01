@@ -12,3 +12,11 @@ export type Channel =
   | 'oauth2-refresh'
   | 'chatbot-tell'
   | 'send-access-token'
+
+export type Message = Save | Read | OAuth2 | OAuth2Refresh | Chatbot
+
+export type Save = { fileName: string; content: string }
+export type Read = { fileName: string }
+export type OAuth2 = { provider: string }
+export type OAuth2Refresh = { provider: string; refresh_token: string }
+export type Chatbot = { message: string }

@@ -7,38 +7,35 @@ import {
   OAUTH_REFRESH,
   CHATBOT_TELL,
   Channel,
-} from '../channels'
+} from '../ipc/channels'
 
-type Message = { type: string; content: string }
-const publish = async (channel: Channel, payload: any) => {
-  const promise = new Promise<Message>(r => {
+const publish = async <Return>(channel: Channel, payload: any) => {
+  const promise = new Promise<Return>(r => {
     ipcRenderer.once(channel, (_e, v) => r(v))
   })
   ipcRenderer.send(channel, payload)
   return promise
 }
 
-const read = (fileName: string) => publish(READ, { fileName })
+const read = (fileName: string) => publish<string>(READ, { fileName })
 const sendAccessToken = (t: string) => ipcRenderer.send(SEND_ACCESS_TOKEN, t)
 const save = (fileName: string, content: string) =>
-  publish(SAVE, { fileName, content })
+  publish<boolean>(SAVE, { fileName, content })
 
 const oauth2 = {
-  authorize: (provider: string) => publish(OAUTH, { provider }),
+  authorize: (provider: string) => publish<Object>(OAUTH, { provider }),
   refresh: (provider: string, refresh_token: string) => {
     const params = { provider, refresh_token }
-    return publish(OAUTH_REFRESH, params)
+    return publish<Object>(OAUTH_REFRESH, params)
   },
 }
 
 const tell = async (message: string) => {
-  const { type, content } = await publish(CHATBOT_TELL, { message })
-  return {
-    content,
-    get success() {
-      return type === 'success'
-    },
-  }
+  type Result =
+    | { type: 'success'; content: string }
+    | { type: 'error'; content: Error }
+  const { type, content } = await publish<Result>(CHATBOT_TELL, { message })
+  return { content, type }
 }
 
 const onResult = (callback: (value: any) => void) => {
