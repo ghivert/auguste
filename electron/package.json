@@ -4,7 +4,8 @@
   "author": "Guillaume Hivert <hivert.is.coming@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "yarn build && NODE_ENV=development electron build/main.js",
+    "dev": "yarn build && NODE_ENV=development electron build/main.js",
+    "start": "yarn build && NODE_ENV=production electron build/main.js",
     "build": "tsc"
   },
   "engines": {

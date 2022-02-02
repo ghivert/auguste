@@ -1,0 +1,18 @@
+{
+  "name": "auguste",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:ghivert/auguste.git",
+  "author": "Guillaume Hivert <hivert.is.coming@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node scripts/dev.mjs"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "dependencies": {
+    "chalk": "^5.0.0",
+    "concurrently": "^7.0.0"
+  }
+}

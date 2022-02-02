@@ -1,4 +1,4 @@
-export const SmartphoneIcon = ({ color, ...props }) => (
+export const SmartphoneIcon = ({ color, ...props }: any) => (
   <svg width="48px" height="89px" viewBox="0 0 48 89" version="1.1" {...props}>
     <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
       <g id="noun_Smartphone_1023" fill="var(--color)" fillRule="nonzero">

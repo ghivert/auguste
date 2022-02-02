@@ -1,24 +1,24 @@
 import { useState, useRef, useCallback, useEffect } from 'react'
-import { useSpotify } from './api'
+import { useSpotify, API } from './api'
 import * as Card from '../components/card'
 import { ComputerIcon } from './computer'
 import { SmartphoneIcon } from './smartphone'
 import styles from './Spotify.module.css'
 import spotifyLogo from './spotify.png'
 
-const useFetchPlayingSong = ({ spotify }) => {
-  const [playingSong, setPlayingSong] = useState()
+const useFetchPlayingSong = (spotify: API) => {
+  const [playingSong, setPlayingSong] = useState<string>()
   const fetchPlayingSong = useCallback(async () => {
-    const current = await spotify.me.player.currentlyPlaying()
+    const current: string = await spotify.me.player.currentlyPlaying()
     setPlayingSong(current)
     return current
   }, [spotify.me.player])
   return { playingSong, fetchPlayingSong }
 }
 
-const useFetchDevices = ({ spotify }) => {
-  const [devices, setDevices] = useState([])
-  const fetchDevices = useCallback(async () => {
+const useFetchDevices = (spotify: API) => {
+  const [devices, setDevices] = useState<string[]>([])
+  const fetchDevices = useCallback(async (): Promise<string[]> => {
     const { devices } = await spotify.me.player.devices()
     setDevices(devices || [])
     return devices || []
@@ -26,8 +26,8 @@ const useFetchDevices = ({ spotify }) => {
   return { devices, fetchDevices }
 }
 
-const useRefreshPlayingSong = ({ fetchPlayingSong }) => {
-  const id = useRef(0)
+const useRefreshPlayingSong = (fetchPlayingSong: () => Promise<string>) => {
+  const id = useRef<any>()
   // prettier-ignore
   const refresh = useCallback(song => {
     if (song) {
@@ -36,14 +36,14 @@ const useRefreshPlayingSong = ({ fetchPlayingSong }) => {
       const songFinishOn = delta > 10000 ? 10000 : delta
       id.current = setTimeout(exec, songFinishOn)
     } else {
-      id.current = 0
+      id.current = undefined
     }
   }, [fetchPlayingSong])
   const clear = useCallback(() => clearTimeout(id.current), [])
   return { refresh, clear }
 }
 
-const useRelaunch = ({ fetchDevices, fetchPlayingSong, refresh }) => {
+const useRelaunch = ({ fetchDevices, fetchPlayingSong, refresh }: any) => {
   const relaunch = useCallback(async () => {
     await fetchDevices()
     const song = await fetchPlayingSong()
@@ -52,7 +52,7 @@ const useRelaunch = ({ fetchDevices, fetchPlayingSong, refresh }) => {
   return relaunch
 }
 
-const useFirstSpotifyConnect = params => {
+const useFirstSpotifyConnect = (params: any) => {
   const [myself, setMyself] = useState()
   const { spotify, fetchDevices, fetchPlayingSong, refresh, clear } = params
   useEffect(() => {
@@ -67,17 +67,18 @@ const useFirstSpotifyConnect = params => {
   return myself
 }
 
-const useInitSpotify = spotify => {
-  const { playingSong, fetchPlayingSong } = useFetchPlayingSong({ spotify })
-  const { devices, fetchDevices } = useFetchDevices({ spotify })
-  const { refresh, clear } = useRefreshPlayingSong({ fetchPlayingSong })
+const useInitSpotify = (spotify: API) => {
+  const { playingSong, fetchPlayingSong } = useFetchPlayingSong(spotify)
+  const { devices, fetchDevices } = useFetchDevices(spotify)
+  const { refresh, clear } = useRefreshPlayingSong(fetchPlayingSong)
   const relaunch = useRelaunch({ fetchDevices, fetchPlayingSong, refresh })
   const params = { spotify, fetchDevices, fetchPlayingSong, refresh, clear }
   const myself = useFirstSpotifyConnect(params)
   return { myself, playingSong, devices, relaunch }
 }
 
-const Connection = ({ spotify }) => (
+type ConnectionProps = { spotify: API }
+const Connection = ({ spotify }: ConnectionProps) => (
   <Card.Body center>
     <div className={styles.spotifyLogo}>
       <img src={spotifyLogo} alt="Spotify" />
@@ -88,17 +89,16 @@ const Connection = ({ spotify }) => (
   </Card.Body>
 )
 
-const onDeviceClick =
-  ({ device, spotify, relaunch }) =>
-  async () => {
+const onDeviceClick = ({ device, spotify, relaunch }: any) => {
+  return async () => {
     await spotify.me.player.transfer(device.id)
     await new Promise(r => setTimeout(r, 100))
     await relaunch()
   }
+}
 
-const renderDevice =
-  ({ spotify, relaunch }) =>
-  device => {
+const renderDevice = ({ spotify, relaunch }: any) => {
+  return (device: any) => {
     const { is_active, type, name, id } = device
     const cl = is_active ? styles.activeDevice : styles.devicePill
     const onClick = onDeviceClick({ device, spotify, relaunch })
@@ -113,8 +113,9 @@ const renderDevice =
       </div>
     )
   }
+}
 
-const RenderProfile = ({ myself }) => {
+const RenderProfile = ({ myself }: any) => {
   const src = myself?.images?.[0]?.url
   const name = myself?.display_name
   return (
@@ -125,7 +126,7 @@ const RenderProfile = ({ myself }) => {
   )
 }
 
-const RenderPlayingSong = ({ song }) => {
+const RenderPlayingSong = ({ song }: any) => {
   const src = song.item.album.images[0].url
   const trackName = song.item.name
   const albumName = song.item.album.name
@@ -142,7 +143,8 @@ const RenderPlayingSong = ({ song }) => {
   )
 }
 
-const Main = ({ spotify }) => {
+type MainProps = { spotify: API }
+const Main = ({ spotify }: MainProps) => {
   const { myself, playingSong, devices, relaunch } = useInitSpotify(spotify)
   const render = renderDevice({ spotify, relaunch })
   return (

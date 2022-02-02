@@ -1,4 +1,4 @@
-export const ComputerIcon = ({ color, ...props }) => (
+export const ComputerIcon = ({ color, ...props }: any) => (
   <svg width="93px" height="78px" viewBox="0 0 93 78" version="1.1" {...props}>
     <g id="Page-1" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
       <g

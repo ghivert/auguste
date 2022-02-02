@@ -6,6 +6,7 @@ import {
   OAUTH,
   OAUTH_REFRESH,
   CHATBOT_TELL,
+  RUN_SCRIPT,
   Channel,
 } from '../ipc/channels'
 
@@ -32,16 +33,14 @@ const oauth2 = {
 
 const tell = async (message: string) => {
   type Result =
-    | { type: 'success'; content: string }
+    | { type: 'success'; content: { text?: string; image?: string }[] }
     | { type: 'error'; content: Error }
   const { type, content } = await publish<Result>(CHATBOT_TELL, { message })
   return { content, type }
 }
 
-const onResult = (callback: (value: any) => void) => {
-  ipcRenderer.on('run-script-result', callback)
-  return () => ipcRenderer.removeListener('run-script-result', callback)
-}
+const runScript = async (fileName: string) =>
+  publish<any>(RUN_SCRIPT, { fileName })
 
-const funcs = { save, read, oauth2, onResult, sendAccessToken, tell }
+const funcs = { save, read, oauth2, sendAccessToken, tell, runScript }
 contextBridge.exposeInMainWorld('auguste', funcs)

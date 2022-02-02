@@ -4,7 +4,7 @@ import { DashboardIcon } from './icons/dashboard'
 import { SettingsIcon } from './icons/settings'
 import styles from './Taskbar.module.css'
 
-const prependZero = value => {
+const prependZero = (value: number) => {
   if (value < 10) {
     return `0${value}`
   } else {
@@ -23,14 +23,16 @@ const Clock = () => {
   return <code className={styles.clock}>{[hours, minutes].join(' : ')}</code>
 }
 
-const Spacer = ({ size }) => {
+const Spacer = ({ size }: { size: 'xl' | 'l' | 'm' }) => {
   const options = { xl: 36, l: 24, m: 12 }
   const s = options[size] ?? 12
   const style = { paddingTop: s, paddingLeft: s }
   return <div style={style} />
 }
 
-export const Taskbar = ({ activePanel, onIconClick }) => {
+export type Panel = 'dashboard' | 'editor' | 'settings'
+export type Props = { activePanel: Panel; onIconClick: (panel: Panel) => void }
+export const Taskbar = ({ activePanel, onIconClick }: Props) => {
   const dashColor = activePanel === 'dashboard' ? '' : '-disabled'
   const editorColor = activePanel === 'editor' ? '' : '-disabled'
   const settingsColor = activePanel === 'settings' ? '' : '-disabled'
