@@ -11,60 +11,6 @@
   padding: 96px;
 }
 
-.textEditor {
-  background: #1e1e1e;
-}
-
-.consoleWrapper {
-  composes: textEditor;
-  display: flex;
-  flex-direction: column;
-}
-
-.runArrow {
-  width: 30px;
-  opacity: 0.8;
-  cursor: pointer;
-}
-
-.monaco {
-  padding-top: 86px;
-}
-
-.console {
-  display: flex;
-  flex-direction: column;
-  color: #ddd;
-  padding-top: 86px;
-  overflow: scroll;
-}
-
-.stdout {
-  line-height: 24px;
-  white-space: pre;
-  padding: 6px;
-  border-bottom: 1px solid #333;
-  font-weight: bold;
-}
-
-.stderr {
-  composes: stdout;
-  color: red;
-}
-
-.dateConsole {
-  composes: stdout;
-  color: #444;
-}
-
-.stdout:first-child {
-  padding-top: 0;
-}
-
-.stdout:last-child {
-  border-bottom: none;
-}
-
 .dashboard {
   display: grid;
   grid-template-rows: 80px 1fr;
@@ -212,11 +158,4 @@
   font-weight: 500;
   font-size: 1.3rem;
   color: #999;
-}
-
-.cardHeadersButtons {
-  display: flex;
-  gap: 24px;
-  align-items: center;
-  justify-content: center;
 }

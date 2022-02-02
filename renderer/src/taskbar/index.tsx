@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react'
-import { EditorIcon } from './icons/editor'
-import { DashboardIcon } from './icons/dashboard'
-import { SettingsIcon } from './icons/settings'
+import * as icons from '../icons'
 import styles from './Taskbar.module.css'
 
 const prependZero = (value: number) => {
@@ -38,13 +36,13 @@ export const Taskbar = ({ activePanel, onIconClick }: Props) => {
   const settingsColor = activePanel === 'settings' ? '' : '-disabled'
   return (
     <div className={styles.taskbar}>
-      <DashboardIcon
+      <icons.Dashboard
         className={styles.icon}
         color={`var(--icon-color${dashColor})`}
         onClick={() => onIconClick('dashboard')}
       />
       <Spacer size="xl" />
-      <EditorIcon
+      <icons.Editor
         className={styles.icon}
         color={`var(--icon-color${editorColor})`}
         onClick={() => onIconClick('editor')}
@@ -52,7 +50,7 @@ export const Taskbar = ({ activePanel, onIconClick }: Props) => {
       <Spacer size="xl" />
       <Clock />
       <Spacer size="xl" />
-      <SettingsIcon
+      <icons.Settings
         className={styles.icon}
         color={`var(--icon-color${settingsColor})`}
         onClick={() => onIconClick('settings')}

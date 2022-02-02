@@ -1,4 +1,4 @@
-export const SettingsIcon = ({ color, ...props }: any) => (
+export const Settings = ({ color, ...props }: any) => (
   <svg
     width="40px"
     height="40px"
