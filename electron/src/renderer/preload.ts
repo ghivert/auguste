@@ -7,10 +7,12 @@ import {
   OAUTH_REFRESH,
   CHATBOT_TELL,
   RUN_SCRIPT,
+  GET_ADDRESS,
+  GENERATE_ADDRESS,
   Channel,
 } from '../ipc/channels'
 
-const publish = async <Return>(channel: Channel, payload: any) => {
+const publish = async <Return>(channel: Channel, payload?: any) => {
   const promise = new Promise<Return>(r => {
     ipcRenderer.once(channel, (_e, v) => r(v))
   })
@@ -42,5 +44,17 @@ const tell = async (message: string) => {
 const runScript = async (fileName: string) =>
   publish<any>(RUN_SCRIPT, { fileName })
 
-const funcs = { save, read, oauth2, sendAccessToken, tell, runScript }
-contextBridge.exposeInMainWorld('auguste', funcs)
+const address = {
+  get: () => publish(GET_ADDRESS),
+  generate: (options: any) => publish(GENERATE_ADDRESS, options),
+}
+
+contextBridge.exposeInMainWorld('auguste', {
+  save,
+  read,
+  oauth2,
+  sendAccessToken,
+  tell,
+  runScript,
+  address,
+})

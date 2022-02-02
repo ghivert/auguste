@@ -5,6 +5,7 @@ import * as Card from './components/card'
 import { Spotify } from './spotify'
 import styles from './App.module.css'
 import { TextEditor } from './components/editor'
+import { Settings } from './components/settings'
 
 const Dashboard = () => (
   <Card.Card area="panel" className={styles.dashboard}>
@@ -13,14 +14,8 @@ const Dashboard = () => (
   </Card.Card>
 )
 
-const Settings = () => (
-  <Card.Card area="panel">
-    <Card.Header title="Settings" />
-  </Card.Card>
-)
-
 export const App = () => {
-  const [panel, setPanel] = useState<Panel>('dashboard')
+  const [panel, setPanel] = useState<Panel>('settings')
   return (
     <div className={styles.main}>
       <Taskbar activePanel={panel} onIconClick={setPanel} />

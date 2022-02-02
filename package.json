@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "chalk": "^5.0.0",
-    "concurrently": "^7.0.0"
+    "concurrently": "^7.0.0",
+    "ethers": "^5.5.4",
+    "react": "^17.0.2"
   }
 }

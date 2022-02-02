@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import * as icons from '../icons'
+import { Spacer } from '../components/spacer'
 import styles from './Taskbar.module.css'
 
 const prependZero = (value: number) => {
@@ -19,13 +20,6 @@ const Clock = () => {
   const hours = prependZero(hour.getHours())
   const minutes = prependZero(hour.getMinutes())
   return <code className={styles.clock}>{[hours, minutes].join(' : ')}</code>
-}
-
-const Spacer = ({ size }: { size: 'xl' | 'l' | 'm' }) => {
-  const options = { xl: 36, l: 24, m: 12 }
-  const s = options[size] ?? 12
-  const style = { paddingTop: s, paddingLeft: s }
-  return <div style={style} />
 }
 
 export type Panel = 'dashboard' | 'editor' | 'settings'

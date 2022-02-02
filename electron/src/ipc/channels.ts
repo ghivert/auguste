@@ -5,6 +5,8 @@ export const OAUTH_REFRESH = 'oauth2-refresh'
 export const CHATBOT_TELL = 'chatbot-tell'
 export const SEND_ACCESS_TOKEN = 'send-access-token'
 export const RUN_SCRIPT = 'run-script'
+export const GET_ADDRESS = 'get-address'
+export const GENERATE_ADDRESS = 'generate-address'
 
 export type Channel =
   | 'save'
@@ -14,6 +16,8 @@ export type Channel =
   | 'chatbot-tell'
   | 'send-access-token'
   | 'run-script'
+  | 'get-address'
+  | 'generate-address'
 
 export type Message = Save | Read | OAuth2 | OAuth2Refresh | Chatbot | RunScript
 

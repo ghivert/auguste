@@ -1,6 +1,7 @@
 export type Unsubscriber = () => void
 export type Content = { text?: string; image?: string }[]
 export type Stds = { stdout: string; stderr: string }
+export type Wallet = { publicKey: string; address: string; mnemonic: string }
 export type Result =
   | { type: 'success'; content: Content }
   | { type: 'error'; content: Error }
@@ -16,5 +17,14 @@ export type Auguste = {
   runScript: (
     fileName: string
   ) => Promise<{ path: string; value: Error | Stds }>
+  address: {
+    get: () => Promise<Wallet | null>
+    generate: (option?: {
+      mnemonic?: string
+      privateKey?: string
+    }) => Promise<
+      { type: 'success'; value: Wallet } | { type: 'error'; value: string }
+    >
+  }
 }
 export const Auguste: Auguste = (window as any).auguste

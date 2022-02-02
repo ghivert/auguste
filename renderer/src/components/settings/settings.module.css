@@ -1,0 +1,148 @@
+.settings {
+  display: grid;
+  grid-template-rows: 80px 1fr;
+  grid-template-columns: auto 1fr;
+  grid-column-gap: 24px;
+  padding: 24px;
+  grid-template-areas:
+    'empty empty'
+    'menu main';
+}
+
+.menu {
+  display: flex;
+  overflow: auto;
+  flex-direction: column;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  padding: 18px 24px;
+  background: transparent;
+  text-transform: capitalize;
+  font-weight: 700;
+  font-family: var(--sans-serif);
+  appearance: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.activeMenuItem {
+  composes: menuItem;
+  background: #222;
+}
+
+.menuItemIcon {
+  width: 14px;
+}
+
+.pageHeader {
+  text-transform: capitalize;
+}
+
+.centerLoader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.accountWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 24px;
+}
+
+.titleAccount {
+  font-size: 1.6rem;
+  font-weight: bold;
+}
+
+.callout {
+  background: #444;
+  border-radius: 10px;
+  display: flex;
+  overflow: hidden;
+}
+
+.calloutInfo {
+  width: 10px;
+  height: 100%;
+  flex-shrink: 0;
+  background: green;
+}
+
+.calloutWarning {
+  width: 10px;
+  height: 100%;
+  flex-shrink: 0;
+  background: red;
+}
+
+.calloutContent {
+  padding: 9px 12px;
+}
+
+.cardWallet {
+  padding: 12px;
+  background: #333;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cardWalletTitle {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.cardWalletWithSubtitle {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cardWalletSubtitle {
+  color: #bbb;
+}
+
+.cardWalletInput {
+  background: #444;
+  border: none;
+  font-size: 1rem;
+  padding: 12px 18px;
+  border-radius: 10px;
+  outline: none;
+  color: white;
+  font-family: var(--monospace);
+}
+
+.orWrapper {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin: 12px;
+}
+
+.orLine {
+  flex: 1;
+  height: 2px;
+  background: #333;
+  border-radius: 100px;
+}
+
+.inputWrapper {
+  display: flex;
+  gap: 12px;
+}
+
+.inputWrapper input {
+  flex: 1;
+}

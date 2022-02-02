@@ -166,13 +166,11 @@ export const Bot = () => {
         res.content.forEach(({ text, image }) => {
           const date = new Date()
           const newMessage = { text, image, sender, date }
-          console.log(newMessage)
           setMessages(mess => [newMessage, ...mess])
         })
       }
     }, diff)
   }
-  console.log(messages)
   return (
     <Card.Card className={styles.bot}>
       <Card.Header title="Auguste" />
