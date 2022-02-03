@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect } from 'react'
+import { Fragment, useState, useEffect, useRef } from 'react'
 import { Auguste, Wallet } from '../../auguste'
 import * as Card from '../card'
 import { Spacer } from '../spacer'
@@ -156,29 +156,40 @@ const Account = () => {
   const [privateKey, setPrivateKey] = useState('')
   const [mnemonic, setMnemonic] = useState('')
   const [error, setError] = useState('')
+  const timeoutRef = useRef<any>()
   useEffect(() => {
     const run = async () => {
       const ad = await Auguste.address.get()
-      setAddress(ad)
+      setAddress(null)
       setLoading(false)
     }
     run()
   }, [])
+  const generateParams = (option?: string) => {
+    if (option === 'mnemonic') {
+      return { mnemonic }
+    } else if (option === 'privateKey') {
+      return { privateKey }
+    } else {
+      return undefined
+    }
+  }
   const generateWallet = (option?: 'mnemonic' | 'privateKey') => async () => {
-    const params =
-      option === 'mnemonic'
-        ? { mnemonic }
-        : option === 'privateKey'
-        ? { privateKey }
-        : undefined
+    const params = generateParams(option)
     const result = await Auguste.address.generate(params)
     if (result.type === 'success') setAddress(result.value)
     else {
       setError(result.value)
-      setTimeout(() => setError(''), 5000)
+      timeoutRef.current = setTimeout(() => setError(''), 5000)
     }
   }
-  console.log(mnemonic.split(' ').length)
+  const closeError = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+      timeoutRef.current = undefined
+    }
+    setError('')
+  }
   return (
     <Fragment>
       {loading && (
@@ -194,6 +205,7 @@ const Account = () => {
           mnemonic={mnemonic}
           setMnemonic={setMnemonic}
           generateWallet={generateWallet}
+          closeError={closeError}
         />
       )}
       {!loading && address && (
@@ -217,7 +229,7 @@ export const Settings = () => {
     <Card.Card area="panel" className={styles.settings}>
       <Card.Header title="Settings" />
       <Menu page={page} setPage={setPage} />
-      <Card.Card area="main">
+      <Card.Card area="main" opaque>
         <Card.Header title={page} className={styles.pageHeader} />
         <Card.Body>
           <RenderSettings page={page} />

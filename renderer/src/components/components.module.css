@@ -1,27 +1,20 @@
 .card {
-  background: rgba(255, 255, 255, 0.6);
+  background: var(--background-grey);
   border-radius: 20px;
-  box-shadow: 0px 0px 5px 0px rgb(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 5px 0px var(--box-shadow);
   overflow: hidden;
   position: relative;
 }
 
-.glassmorphism {
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.6);
+.opaqueCard {
+  background: var(--background-grey-opaque);
 }
 
-@media (prefers-color-scheme: dark) {
-  .card {
-    background: rgba(20, 20, 20, 0.8);
-  }
-
-  .glassmorphism {
-    color: white;
-    background: rgba(20, 20, 20, 0.6);
-    border: 1px solid rgba(20, 20, 20, 0.18);
-  }
+.glassmorphism {
+  border: 1px solid var(--border-grey);
+  backdrop-filter: blur(15px);
+  background: var(--glass-background-grey);
+  color: var(--grey-text);
 }
 
 .cardHeader {
@@ -42,6 +35,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.opaqueCard .cardHeader {
+  background: var(--background-white);
 }
 
 .cardBody {
@@ -74,10 +71,10 @@
   width: 64px;
   height: 64px;
   margin: 8px;
-  border: 8px solid #946e1b;
+  border: 8px solid var(--yellow);
   border-radius: 50%;
   animation: loader 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: #fff transparent transparent transparent;
+  border-color: var(--loader-color) transparent transparent transparent;
 }
 
 .loader div:nth-child(1) {
@@ -103,11 +100,11 @@
 
 .button {
   appearance: none;
-  background: #946e1b;
+  background: var(--yellow);
   padding: 12px;
   font-size: 1rem;
   font-family: inherit;
-  color: white;
+  color: var(--white);
   border: none;
   border-radius: 10px;
   font-weight: 700;
@@ -116,6 +113,6 @@
 }
 
 .button:disabled {
-  background: #444;
-  color: #777;
+  background: var(--button-background-disabled);
+  color: var(--button-color-disabled);
 }

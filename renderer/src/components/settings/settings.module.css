@@ -13,6 +13,7 @@
   display: flex;
   overflow: auto;
   flex-direction: column;
+  background: var(--background-white);
 }
 
 .menuItem {
@@ -27,14 +28,14 @@
   font-family: var(--sans-serif);
   appearance: none;
   border: none;
-  color: white;
+  color: var(--grey-text);
   cursor: pointer;
   font-size: 0.9rem;
 }
 
 .activeMenuItem {
   composes: menuItem;
-  background: #222;
+  background: var(--dark-white);
 }
 
 .menuItemIcon {
@@ -65,7 +66,7 @@
 }
 
 .callout {
-  background: #444;
+  background: var(--background-white);
   border-radius: 10px;
   display: flex;
   overflow: hidden;
@@ -75,14 +76,14 @@
   width: 10px;
   height: 100%;
   flex-shrink: 0;
-  background: green;
+  background: var(--green);
 }
 
 .calloutWarning {
   width: 10px;
   height: 100%;
   flex-shrink: 0;
-  background: red;
+  background: var(--red);
 }
 
 .calloutContent {
@@ -91,7 +92,7 @@
 
 .cardWallet {
   padding: 12px;
-  background: #333;
+  background: var(--background-white);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -110,17 +111,17 @@
 }
 
 .cardWalletSubtitle {
-  color: #bbb;
+  color: var(--light-grey-text);
 }
 
 .cardWalletInput {
-  background: #444;
+  background: var(--button-background-disabled);
   border: none;
   font-size: 1rem;
   padding: 12px 18px;
   border-radius: 10px;
   outline: none;
-  color: white;
+  color: var(--grey-text);
   font-family: var(--monospace);
 }
 
@@ -129,12 +130,13 @@
   align-items: center;
   gap: 24px;
   margin: 12px;
+  color: var(--grey-text);
 }
 
 .orLine {
   flex: 1;
   height: 2px;
-  background: #333;
+  background: var(--light-dark-white);
   border-radius: 100px;
 }
 

@@ -35,7 +35,6 @@ export const get = async (event: Event) => {
 const saveWallet = async (wallet: ethers.Wallet) => {
   const address = await wallet.getAddress()
   const { privateKey, publicKey, mnemonic } = wallet
-  console.log(privateKey)
   const data = JSON.stringify({ privateKey, publicKey, mnemonic, address })
   const encrypted = electron.safeStorage.encryptString(data)
   const _path = await walletPath()

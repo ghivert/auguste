@@ -1,9 +1,51 @@
 :root {
+  /* Fonts */
   --sans-serif: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
     'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   --monospace: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+
+  /* Colors */
+  --background-grey: rgba(255, 255, 255, 0.6);
+  --background-grey-opaque: rgba(230, 230, 230, 1);
+  --glass-background-grey: rgba(255, 255, 255, 0.9);
+  --border-grey: rgba(255, 255, 255, 0.18);
+  --grey-text: black;
+  --background-white: white;
+  --light-grey-text: rgb(119, 119, 119);
+  --loader-color: black;
+  --dark-white: rgb(238, 238, 238);
+  --light-dark-white: rgb(221, 221, 221);
+  --button-background-disabled: rgb(245, 245, 245);
+  --button-color-disabled: rgb(170, 170, 170);
+  --placeholder-color: rgb(153, 153, 153);
+  --box-shadow: rgb(0, 0, 0, 0.1);
+  --yellow: rgb(148, 110, 27);
+  --white: white;
+  --green: green;
+  --red: red;
+  --blue: rgb(4, 141, 240);
+  --input-background: rgb(230, 230, 230);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-grey: rgba(20, 20, 20, 0.8);
+    --background-grey-opaque: rgba(20, 20, 20, 1);
+    --glass-background-grey: rgba(20, 20, 20, 0.9);
+    --background-white: rgb(51, 51, 51);
+    --border-grey: rgba(20, 20, 20, 0.18);
+    --grey-text: white;
+    --light-grey-text: rgb(187, 187, 187);
+    --loader-color: white;
+    --dark-white: rgb(34, 34, 34);
+    --light-dark-white: rgb(51, 51, 51);
+    --button-background-disabled: rgb(68, 68, 68);
+    --button-color-disabled: rgb(119, 119, 119);
+    --input-background: rgb(40, 40, 40);
+    --placeholder-color: rgb(102, 102, 102);
+  }
 }
 
 body {

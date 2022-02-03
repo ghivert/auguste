@@ -10,7 +10,7 @@ export const Identity = () => (
       <g
         id="noun-identity-3108997"
         transform="translate(-78.094100, 0.332000)"
-        fill="#ffffff"
+        fill="var(--grey-text)"
         fillRule="nonzero"
       >
         <g id="Group" transform="translate(78.762100, 0.000000)">

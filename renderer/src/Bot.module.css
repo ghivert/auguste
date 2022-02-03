@@ -23,7 +23,7 @@
 }
 
 .textInput {
-  background: rgb(230, 230, 230);
+  background: var(--input-background);
   margin: 12px 24px;
   border-radius: 20px;
   padding: 12px 18px;
@@ -44,10 +44,11 @@
 .genericMessage {
   padding: 12px;
   margin: 2px 24px;
-  background: white;
+  background: var(--background-white);
   max-width: 60%;
   border-radius: 20px;
   white-space: pre-wrap;
+  color: var(--grey-text);
 }
 
 .botMessage {
@@ -55,29 +56,18 @@
   align-self: flex-start;
 }
 
-@media (prefers-color-scheme: dark) {
-  .textInput {
-    background: rgb(40, 40, 40);
-  }
-
-  .genericMessage {
-    background: rgb(30, 30, 30);
-    color: white;
-  }
-}
-
 .userMessage {
   composes: genericMessage;
   align-self: flex-end;
-  background: #048df0;
-  color: white;
+  background: var(--blue);
+  color: var(--white);
 }
 
 .date {
   padding-top: 12px;
   margin: 0 24px;
   font-weight: 500;
-  color: #aaa;
+  color: var(--button-color-disabled);
 }
 
 .userDate {
@@ -91,17 +81,7 @@
 }
 
 .greyText {
-  color: #999;
-}
-
-@media (prefers-color-scheme: dark) {
-  .greyText {
-    color: #666;
-  }
-
-  .date {
-    color: #777;
-  }
+  color: var(--placeholder-color);
 }
 
 .imageMessage {

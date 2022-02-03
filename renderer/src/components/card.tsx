@@ -1,15 +1,21 @@
 import React, { FC } from 'react'
 import styles from './components.module.css'
 
-const toClName = (...classes: (string | undefined)[]) => {
+const toClName = (...classes: (string | false | undefined)[]) => {
   return classes.filter(v => !!v).join(' ')
 }
 
-export type CardProps = { tag?: string; area?: string; className?: string }
+export type CardProps = {
+  tag?: string
+  area?: string
+  className?: string
+  opaque?: boolean
+}
 export const Card: FC<CardProps> = props => {
   const { tag = 'div', area, children } = props
   const style = { gridArea: area }
-  const className = toClName(props.className, styles.card)
+  const opaque = props.opaque && styles.opaqueCard
+  const className = toClName(props.className, styles.card, opaque)
   return React.createElement(tag, { style, className }, children)
 }
 
