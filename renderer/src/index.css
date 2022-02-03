@@ -21,7 +21,7 @@
   --button-color-disabled: rgb(170, 170, 170);
   --placeholder-color: rgb(153, 153, 153);
   --box-shadow: rgb(0, 0, 0, 0.1);
-  --yellow: rgb(148, 110, 27);
+  --yellow: rgb(199, 151, 48);
   --white: white;
   --green: green;
   --red: red;
@@ -37,6 +37,7 @@
     --background-white: rgb(51, 51, 51);
     --border-grey: rgba(20, 20, 20, 0.18);
     --grey-text: white;
+    --yellow: rgb(148, 110, 27);
     --light-grey-text: rgb(187, 187, 187);
     --loader-color: white;
     --dark-white: rgb(34, 34, 34);
